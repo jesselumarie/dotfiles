@@ -23,6 +23,8 @@ alias sc='script/console'
 alias ss='script/server'
 alias sw='script/worker'
 alias sd='script/dev'
+alias sb='script/build'
 alias berps='current_dir=$PWD; cd ~/Github/service_manager/; bundle exec rake ps;cd $current_dir'
 alias sm='cd ~/Github/service_manager/'
 alias gh='cd ~/Github'
+alias tsh="~/dotfiles/utilities/tsh.sh"

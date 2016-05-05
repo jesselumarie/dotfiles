@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_backup           # old dotfiles backup directory
-files=".bash_profile .bashrc .vimrc .rspec .gitconfig .rubocop.yml .rubocop-disabled.yml .rubocop-enabled.yml"    # list of files/folders to symlink in homedir
+files=".bash_profile .bashrc .vimrc .rspec .gitconfig .rubocop.yml .rubocop-disabled.yml .rubocop-enabled.yml .vim"    # list of files/folders to symlink in homedir
 
 ##########
 

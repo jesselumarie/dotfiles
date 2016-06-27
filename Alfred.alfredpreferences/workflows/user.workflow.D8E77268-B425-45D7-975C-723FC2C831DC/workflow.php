@@ -5,7 +5,7 @@ require 'curl.php';
 
 class Workflow
 {
-    const VERSION = 'cb8826fbd2ef9c7fd5a25f2bf0142bc667c413bc';
+    const VERSION = 'cf99cf8bd19539af6cb6a62fffdfa75814d69a32';
     const BUNDLE = 'de.gh01.alfred.github';
     const DEFAULT_CACHE_MAX_AGE = 10;
 
@@ -263,7 +263,7 @@ class Workflow
 
     public static function cleanCache()
     {
-        self::$db->exec('DELETE FROM request_cache WHERE timestamp < ' . (time() - 30 * 24 * 60 * 60));
+        self::$db->exec('DELETE FROM request_cache WHERE timestamp < ' . (time() - 100 * 24 * 60 * 60));
     }
 
     public static function deleteCache()

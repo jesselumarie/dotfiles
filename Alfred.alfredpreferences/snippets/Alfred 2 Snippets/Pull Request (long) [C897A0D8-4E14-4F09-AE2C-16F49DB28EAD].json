@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "#### What's this do?\n\n#### Why are we doing this? (w\/ JIRA link if applicable)\n\n#### Who should review this PR?\n\n#### Anything the reviewer(s) should know to review effectively?\n\n#### How should this be tested?\n\n#### Dependencies for merging? Releasing to production?\n\n#### Screenshots (if applicable)",
+    "uid" : "C897A0D8-4E14-4F09-AE2C-16F49DB28EAD",
+    "name" : "Pull Request (long)",
+    "keyword" : "PR long"
+  }
+}

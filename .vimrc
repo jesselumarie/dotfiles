@@ -1,9 +1,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-:syntax on
+syntax on
 colorscheme onedark
-
 
 set softtabstop=2
 set tabstop=2
@@ -17,10 +16,11 @@ set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set ts=2
 set listchars=tab:▸\ ,eol:¬ " Visualize tabs and newlines
-:set colorcolumn=80
+set colorcolumn=80
+set rtp+=~/.fzf
 
 " F4 to toggle highlighting on/off, and show current value.
-:noremap <Leader><Leader> :set hlsearch! hlsearch?<CR>
+noremap <Leader><Leader> :set hlsearch! hlsearch?<CR>
 map <C-n> :NERDTreeToggle<CR>
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim

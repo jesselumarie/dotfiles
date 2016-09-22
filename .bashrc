@@ -4,17 +4,16 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Github/go
 export PATH=$PATH:$GOPATH/bin
-export DOCKER_HOST=tcp://192.168.23.2:2375
 export LOG_FORMAT=colored
 
 function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'
 }
 
-function start { 
+function start {
   current_dir=$PWD;
   cd ~/Github/service_manager;
-  script/start "$1"; 
+  script/start "$1";
   cd $current_dir;
 }
 
@@ -50,5 +49,11 @@ alias tsh="~/dotfiles/utilities/tsh.sh"
 alias vim='/usr/local/bin/vim'
 alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh'
+alias rmrf='mv node_modules __node_modules && rm -rf __node_modules &'
+alias f='fzf'
 
 . ~/dotfiles/.bashrc.private
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+source ~/dotfiles/utilities/fzf_functions.sh

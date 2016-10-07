@@ -21,14 +21,13 @@ set rtp+=~/.fzf
 
 " F4 to toggle highlighting on/off, and show current value.
 noremap <Leader><Leader> :set hlsearch! hlsearch?<CR>
-map <C-n> :NERDTreeToggle<CR>
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdTree'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'fatih/vim-go'

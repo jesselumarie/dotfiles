@@ -19,7 +19,7 @@ function start {
 
 source ~/.git-completion.bash
 
-PS1="\[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]> \[\033[0;39m\]"
+PS1="[\$(parse_git_branch)]"
 
 export NVM_DIR=~/.nvm
 . $(brew --prefix nvm)/nvm.sh
@@ -51,9 +51,16 @@ alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh'
 alias rmrf='mv node_modules __node_modules && rm -rf __node_modules &'
 alias f='fzf'
+alias vim='vim $(fzf)'
 
 . ~/dotfiles/.bashrc.private
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 source ~/dotfiles/utilities/fzf_functions.sh
+PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin

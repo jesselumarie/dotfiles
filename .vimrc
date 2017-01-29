@@ -1,6 +1,13 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" remove all trailing whitespace
+fun! <SID>StripTrailingWhitespaces()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
+endfun
 
 
 " set the runtime path to include Vundle and initialize
@@ -31,6 +38,10 @@ set ts=2
 set listchars=tab:▸\ ,eol:¬ " Visualize tabs and newlines
 set colorcolumn=80
 set rtp+=~/.fzf
+set visualbell
+
+" remove trailing whitespace
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " F4 to toggle highlighting on/off, and show current value.
 noremap <Leader><Leader> :set hlsearch! hlsearch?<CR>

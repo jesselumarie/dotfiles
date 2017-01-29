@@ -17,9 +17,17 @@ function start {
   cd $current_dir;
 }
 
+function v {
+  vim $(fzf)
+}
+
+function o {
+  open $(fzf)
+}
+
 source ~/.git-completion.bash
 
-PS1="[\$(parse_git_branch)]"
+PS1="⚡️ \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]> \[\033[0;39m\]"
 
 export NVM_DIR=~/.nvm
 . $(brew --prefix nvm)/nvm.sh
@@ -51,7 +59,6 @@ alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh'
 alias rmrf='mv node_modules __node_modules && rm -rf __node_modules &'
 alias f='fzf'
-alias vim='vim $(fzf)'
 
 . ~/dotfiles/.bashrc.private
 

@@ -1,47 +1,7 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" remove all trailing whitespace
-fun! <SID>StripTrailingWhitespaces()
-  let l = line(".")
-  let c = col(".")
-  %s/\s\+$//e
-  call cursor(l, c)
-endfun
-
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-
-call vundle#begin()
-" Plugin 'VundleVim/Vundle.vim'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'git://git.wincent.com/command-t.git'
-" Plugin 'airblade/vim-gitgutter'
-" Plugin 'fatih/vim-go'
-call vundle#end()            " required
-
 syntax on
-colorscheme onedark
-filetype plugin indent on    " required
-set softtabstop=2
-set tabstop=2
-set shiftwidth=2
-set expandtab
 set number
-set showmatch
-set autoindent
-
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
-set ts=2
-set listchars=tab:▸\ ,eol:¬ " Visualize tabs and newlines
-set colorcolumn=80
-set rtp+=~/.fzf
-set visualbell
-
-" remove trailing whitespace
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-" F4 to toggle highlighting on/off, and show current value.
-noremap <Leader><Leader> :set hlsearch! hlsearch?<CR>
+set clipboard=unnamed 
+set softtabstop=2 "how many columns when you hit Tab in insert mode
+set tabstop=2 "how wide a 'tab' is
+set shiftwidth=2 "how many columns text is indented with >> and <<
+set expandtab

@@ -1,5 +1,7 @@
+export PATH="~/.pyenv/bin:$PATH"
 eval "$(rbenv init -)"
-eval $(docker-machine env)
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Github/go
@@ -30,8 +32,6 @@ source ~/.git-completion.bash
 PS1="⚡️ \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]> \[\033[0;39m\]"
 
 export NVM_DIR=~/.nvm
-. $(brew --prefix nvm)/nvm.sh
-
 
 export -f start
 
@@ -54,11 +54,11 @@ alias dps='current_dir=$PWD; cd ~/Github/service_manager/; script/ps; cd $curren
 alias sm='cd ~/Github/service_manager/'
 alias gh='cd ~/Github'
 alias tsh="~/dotfiles/utilities/tsh.sh"
-alias vim='/usr/local/bin/vim'
 alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh'
 alias rmrf='mv node_modules __node_modules && rm -rf __node_modules &'
 alias f='fzf'
+alias vim='/usr/local/bin/vim'
 
 . ~/dotfiles/.bashrc.private
 
@@ -66,8 +66,4 @@ alias f='fzf'
 
 source ~/dotfiles/utilities/fzf_functions.sh
 PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
-PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
-PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
-PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
-PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
-PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

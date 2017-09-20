@@ -9,13 +9,11 @@
 			<key>enabled</key>
 			<true/>
 			<key>keyword</key>
-			<string>tc</string>
-			<key>plusSpaces</key>
-			<false/>
+			<string>bl</string>
 			<key>text</key>
-			<string>Trunk Club GitHub Search</string>
+			<string>Bricklane GitHub Search</string>
 			<key>url</key>
-			<string>https://github.com/search?q=user%3Atrunkclub+{query}&amp;ref=opensearch&amp;type=Code</string>
+			<string>https://github.com/search?q=user%3APropertyLift+{query}&amp;ref=opensearch&amp;type=Code</string>
 			<key>utf8</key>
 			<true/>
 		</dict>

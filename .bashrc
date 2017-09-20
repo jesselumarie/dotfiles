@@ -6,7 +6,12 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Github/go
 export PATH=$PATH:$GOPATH/bin
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export LOG_FORMAT=colored
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/jessefurmanek/.docker/machine/machines/dinghy"
+export DOCKER_MACHINE_NAME="dinghy"
 
 function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'
@@ -27,7 +32,6 @@ function o {
   open $(fzf)
 }
 
-source ~/.git-completion.bash
 
 PS1="⚡️ \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]> \[\033[0;39m\]"
 
@@ -51,12 +55,10 @@ alias sw='script/worker'
 alias sd='script/dev'
 alias sb='script/build'
 alias dps='current_dir=$PWD; cd ~/Github/service_manager/; script/ps; cd $current_dir'
-alias sm='cd ~/Github/service_manager/'
-alias gh='cd ~/Github'
-alias tsh="~/dotfiles/utilities/tsh.sh"
+alias gh='cd ~/repos'
+alias repos='cd ~/repos'
 alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh'
-alias rmrf='mv node_modules __node_modules && rm -rf __node_modules &'
 alias f='fzf'
 alias vim='/usr/local/bin/vim'
 
@@ -65,5 +67,6 @@ alias vim='/usr/local/bin/vim'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 source ~/dotfiles/utilities/fzf_functions.sh
-PATH=$PATH:/Users/jessefurmanek/Github/devtools/bin
+source ~/.git-completion.bash
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

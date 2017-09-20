@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "cd \/var\/app\/",
-    "dontautoexpand" : true,
-    "uid" : "59B02E0C-FD02-49CF-BE39-0999955796C8",
-    "name" : "Goto app directory",
-    "keyword" : "cd"
-  }
-}

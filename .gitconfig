@@ -1,8 +1,8 @@
 # This is Git's per-user configuration file.
 [user]
 # Please adapt and uncomment the following lines:
-name = Jesse Furmanek
-	email = jesse.furmanek@gmail.com
+name = Jesse Lumarie
+	email = jesse.lumarie@gmail.com
 
 [color]
   branch = auto

@@ -1,4 +1,11 @@
+# set up ruby
 eval "$(rbenv init -)"
+
+# set up python
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=0
+
 export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Github/go
@@ -41,10 +48,13 @@ alias sb='script/build'
 alias dps='current_dir=$PWD; cd ~/Github/service_manager/; script/ps; cd $current_dir'
 alias gh='cd ~/repos'
 alias repos='cd ~/repos'
+alias fa='cd ~/repos/bricklane_repos/fundadmin'
+alias bl='cd ~/repos/bricklane_repos/bricklane'
 alias dot='cd ~/dotfiles'
-alias dsync='sh ~/dotfiles/sync.sh'
+alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
 alias f='fzf'
 alias vim='/usr/local/bin/vim'
+
 
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 

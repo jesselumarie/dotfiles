@@ -1,0 +1,9 @@
+{
+    "workbench.colorTheme": "Quiet Light",
+    "vim.disableAnnoyingNeovimMessage": true,
+    "editor.minimap.enabled": false,
+    "vim.useSystemClipboard": true,
+    "editor.renderWhitespace": "all",
+    "editor.renderIndentGuides": false,
+    "files.trimTrailingWhitespace": true
+}

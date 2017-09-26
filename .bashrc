@@ -6,12 +6,25 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=0
 
+# set up node
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
 export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Github/go
 export PATH=$PATH:$GOPATH/bin
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export LOG_FORMAT=colored
+export FZF_DEFAULT_OPTS='
+  --color=bg+:24
+'
+export FZF_CTRL_T__OPTS='
+  --color=bg+:24
+'
+export FZF_DEFAULT_COMMAND='find .'
+export FZF_CTRL_T_COMMAND='find .'
 
 function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'
@@ -55,7 +68,6 @@ alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
 alias f='fzf'
 alias vim='/usr/local/bin/vim'
 
-
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -63,4 +75,3 @@ alias vim='/usr/local/bin/vim'
 source ~/dotfiles/utilities/fzf_functions.sh
 source ~/dotfiles/utilities/git-completion.bash
 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

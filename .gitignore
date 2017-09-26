@@ -1,4 +1,6 @@
 .DS_Store
 **/.DS_Store
 .bashrc.private
+*.swp
+*.swo
 Alfred.alfredpreferences/clipboard/*

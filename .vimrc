@@ -9,8 +9,7 @@ set expandtab
 " Install vim-plugged plugins
 call plug#begin('~/.vim/plugged')
 Plug 'wincent/command-t'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
 call plug#end()
 
 let g:fzf_colors =
@@ -28,3 +27,10 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
+
+map <leader>a :Ack<CR>
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif

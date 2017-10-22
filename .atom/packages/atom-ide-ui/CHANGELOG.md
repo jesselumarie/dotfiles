@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.5.0
+
+- New, revamped diagnostics experience! (#39)
+- Added experimental support for signature help.
+- Prevent improperly sized datatips from appearing. (#22)
+- Many improvements to the outline view, including:
+  - Outlines now respect the editor font, font size, and line height.
+  - Also, the "Outline View" panel is now titled as just "Outline".
+- Linter conflict notification now hides if linter is disabled externally. (#56)
+- Upgraded to React 16.
+
+## v0.4.0
+
+- The minimum supported Atom version is now 1.19.
+- Outline and diagnostic entries no longer focus the editor on click.
+  - Use double-click to get the old focus behavior.
+- Definition providers may now return a null query range to use the current word range.
+- Added a "revealTooltip" option for busy signals to forcibly show the tooltip text.
+
 ## v0.3.3
 
 - Ensure linter message types are converted correctly.

@@ -3,7 +3,7 @@ const {AutoLanguageClient} = require('atom-languageclient')
 const {filter} = require('fuzzaldrin-plus')
 
 class TypeScriptLanguageClient extends AutoLanguageClient {
-  getGrammarScopes () { return atom.config.get('ide-typescript.javascriptSupport') ? [ 'source.ts', 'source.js', 'source.js.jsx' ] : [ 'source.ts' ] }
+  getGrammarScopes () { return atom.config.get('ide-typescript.javascriptSupport') ? [ 'source.ts', 'source.tsx', 'source.js', 'source.js.jsx' ] : [ 'source.ts', 'source.tsx' ] }
   getLanguageName () { return 'TypeScript' }
   getServerName () { return 'SourceGraph' }
 
@@ -20,7 +20,7 @@ class TypeScriptLanguageClient extends AutoLanguageClient {
     const prefix = request.prefix.trim()
     const server = await this._serverManager.getServer(request.editor)
     if (server == null) {
-      Promise.resolve([])
+      return Promise.resolve([])
     }
 
     if (prefix === '' && !request.activatedManually) {

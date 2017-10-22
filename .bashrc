@@ -1,18 +1,21 @@
+# Ensure user-installed binaries take precedence
+export PATH=/usr/local/bin:$PATH
+
 # set up ruby
 eval "$(rbenv init -)"
 
 # set up python
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PYENV_VIRTUALENV_DISABLE_PROMPT=0
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/repos
+source /usr/local/bin/virtualenvwrapper.sh
 
 # set up node
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-export PATH="/usr/local/sbin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
+
 export GOPATH=$HOME/Github/go
 export PATH=$PATH:$GOPATH/bin
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
@@ -30,7 +33,7 @@ function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'
 }
 
-function v {
+function vs {
   vim $(fzf)
 }
 
@@ -38,8 +41,25 @@ function o {
   open $(fzf)
 }
 
+function virtualenv_info(){
+    # Get Virtual Env
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        # Strip out the path and just leave the env name
+        venv="${VIRTUAL_ENV##*/}"
+    else
+        # In case you don't have one activated
+        venv=''
+    fi
+    [[ -n "$venv" ]] && echo "(🐍 $venv)"
+}
 
-PS1="⚡️ \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]> \[\033[0;39m\]"
+# disable virtualenv prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=0
+
+# create custome prompt when using virtualenv
+CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
+
+PS1="⚡️ \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]${CUSTOM_VENV_PROMPT}> \[\033[0;39m\]"
 
 export NVM_DIR=~/.nvm
 
@@ -50,6 +70,8 @@ alias gs='git status'
 alias gp='git pull'
 alias gd='git diff'
 alias gco='git checkout'
+alias gdc='git diff --cached'
+alias gcm='git commit -m'
 alias be='bundle exec'
 alias ber='bundle exec rake'
 alias st='script/test'
@@ -66,6 +88,7 @@ alias bl='cd ~/repos/bricklane_repos/bricklane'
 alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
 alias f='fzf'
+alias v='vim'
 alias vim='/usr/local/bin/vim'
 
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private

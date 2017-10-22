@@ -1,3 +1,12 @@
+## 0.10.1:
+- Maintenance:
+  - Use `Base.register` over `Base.initClass`.
+  
+## 0.10.0:
+- Maintenance:
+  - Convert Coffee-to-JS
+  - Also make vmp commands compatible with upcoming ES6-class-based-vmp-operations.
+
 ## 0.9.1:
 - New: Add one-time notifcation to use original ex-mode, since it support vim-mode-plus now.
 

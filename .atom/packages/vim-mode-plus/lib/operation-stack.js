@@ -1,11 +1,11 @@
 const {Disposable, CompositeDisposable} = require("atom")
 const Base = require("./base")
-let OperationAbortedError, Select, MoveToRelativeLine
+let OperationAbortedError
 
 // opration life in operationStack
 // 1. run
 //    instantiated by new.
-//    compliment implicit Operator.Select operator if necessary.
+//    complement implicit Operator.SelectInVisualMode operator if necessary.
 //    push operation to stack.
 // 2. process
 //    reduce stack by, popping top of stack then set it as target of new top.
@@ -67,16 +67,6 @@ module.exports = class OperationStack {
     return this.stack.length === 0
   }
 
-  newMoveToRelativeLine() {
-    if (!MoveToRelativeLine) MoveToRelativeLine = Base.getClass("MoveToRelativeLine")
-    return new MoveToRelativeLine(this.vimState)
-  }
-
-  newSelectWithTarget(target) {
-    if (!Select) Select = Base.getClass("Select")
-    return new Select(this.vimState).setTarget(target)
-  }
-
   // Main
   // -------------------------
   run(klass, properties) {
@@ -101,15 +91,14 @@ module.exports = class OperationStack {
         const stackTop = this.peekTop()
         if (stackTop && stackTop.constructor === klass) {
           // Replace operator when identical one repeated, e.g. `dd`, `cc`, `gUgU`
-          operation = this.newMoveToRelativeLine()
-        } else {
-          operation = new klass(this.vimState, properties)
+          klass = "MoveToRelativeLine"
         }
+        operation = Base.getInstance(this.vimState, klass, properties)
       }
 
       if (this.isEmpty()) {
         if ((this.mode === "visual" && operation.isMotion()) || operation.isTextObject()) {
-          operation = this.newSelectWithTarget(operation)
+          operation = Base.getInstance(this.vimState, "SelectInVisualMode").setTarget(operation)
         }
         this.stack.push(operation)
         this.process()
@@ -142,15 +131,19 @@ module.exports = class OperationStack {
     this.run(operation)
   }
 
-  runRecordedMotion(key, {reverse} = {}) {
-    const recoded = this.vimState.globalState.get(key)
-    if (!recoded) return
+  // Currently used in repeat-search and repeat-find("n", "N", ";", ",").
+  runRecordedMotion(key, {reverse = false} = {}) {
+    const recorded = this.vimState.globalState.get(key)
+    if (!recorded) return
 
-    const operation = recoded.clone(this.vimState)
-    operation.repeated = true
-    operation.resetCount()
-    if (reverse) operation.backwards = !operation.backwards
-    this.run(operation)
+    recorded.vimState = this.vimState
+    recorded.repeated = true
+    recorded.operator = null
+    recorded.resetCount()
+
+    if (reverse) recorded.backwards = !recorded.backwards
+    this.run(recorded)
+    if (reverse) recorded.backwards = !recorded.backwards
   }
 
   runCurrentFind(options) {
@@ -189,20 +182,10 @@ module.exports = class OperationStack {
       if (this.mode === "normal" && top.isOperator()) {
         this.modeManager.activate("operator-pending")
       }
-      this.addOperatorSpecificPendingScope(top)
+      // Temporary set while command is running to achieve operation-specific keymap scopes
+      this.addToClassList(top.getCommandNameWithoutPrefix() + "-pending")
     } else {
       this.execute(this.stack.pop())
-    }
-  }
-
-  addOperatorSpecificPendingScope(operation) {
-    // Temporary set while command is running
-    const commandName =
-      typeof operation.constructor.getCommandNameWithoutPrefix === "function"
-        ? operation.constructor.getCommandNameWithoutPrefix()
-        : undefined
-    if (commandName) {
-      this.addToClassList(commandName + "-pending")
     }
   }
 
@@ -233,7 +216,7 @@ module.exports = class OperationStack {
         this.recordedOperation = operation
       }
       this.lastCommandName = operation.name
-      if (operation.isOperator()) operation.resetState()
+      operation.resetState()
     }
 
     if (this.mode === "normal") {

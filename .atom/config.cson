@@ -2,13 +2,12 @@
   core:
     disabledPackages: [
       "vim-mode"
-      "linter"
+      "atom-ide-ui"
+      "ide-typescript"
     ]
-    excludeVcsIgnoredPaths: false
     projectHome: "/Users/jesselumarie/repos"
     telemetryConsent: "limited"
   editor:
-    fontSize: 16
     showInvisibles: true
   "exception-reporting":
     userId: "a56cd6b9-0700-3d13-7217-60af8495d09f"
@@ -17,6 +16,8 @@
       "E501"
     ]
   "linter-ui-default": {}
+  "vim-mode-plus":
+    notifiedCoffeeScriptNoLongerSupportedToExtendVMP: true
   "vim-mode-plus-ex-mode":
     notifiedUseExMode: true
   welcome:

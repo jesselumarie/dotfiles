@@ -3,8 +3,12 @@
 module.exports =
 Operator:
   file: "./operator"
+SelectBase:
+  file: "./operator"
 Select:
   file: "./operator"
+  commandName: "vim-mode-plus:select"
+  commandScope: "atom-text-editor"
 SelectLatestChange:
   file: "./operator"
   commandName: "vim-mode-plus:select-latest-change"
@@ -21,6 +25,8 @@ SelectOccurrence:
   file: "./operator"
   commandName: "vim-mode-plus:select-occurrence"
   commandScope: "atom-text-editor"
+SelectInVisualMode:
+  file: "./operator"
 CreatePersistentSelection:
   file: "./operator"
   commandName: "vim-mode-plus:create-persistent-selection"
@@ -171,6 +177,10 @@ InsertAtEndOfOccurrence:
   file: "./operator-insert"
   commandName: "vim-mode-plus:insert-at-end-of-occurrence"
   commandScope: "atom-text-editor"
+InsertAtHeadOfOccurrence:
+  file: "./operator-insert"
+  commandName: "vim-mode-plus:insert-at-head-of-occurrence"
+  commandScope: "atom-text-editor"
 InsertAtStartOfSubwordOccurrence:
   file: "./operator-insert"
   commandName: "vim-mode-plus:insert-at-start-of-subword-occurrence"
@@ -178,6 +188,10 @@ InsertAtStartOfSubwordOccurrence:
 InsertAtEndOfSubwordOccurrence:
   file: "./operator-insert"
   commandName: "vim-mode-plus:insert-at-end-of-subword-occurrence"
+  commandScope: "atom-text-editor"
+InsertAtHeadOfSubwordOccurrence:
+  file: "./operator-insert"
+  commandName: "vim-mode-plus:insert-at-head-of-subword-occurrence"
   commandScope: "atom-text-editor"
 InsertAtStartOfSmartWord:
   file: "./operator-insert"
@@ -284,6 +298,18 @@ TrimString:
 CompactSpaces:
   file: "./operator-transform-string"
   commandName: "vim-mode-plus:compact-spaces"
+  commandScope: "atom-text-editor"
+AlignOccurrence:
+  file: "./operator-transform-string"
+  commandName: "vim-mode-plus:align-occurrence"
+  commandScope: "atom-text-editor"
+AlignStartOfOccurrence:
+  file: "./operator-transform-string"
+  commandName: "vim-mode-plus:align-start-of-occurrence"
+  commandScope: "atom-text-editor"
+AlignEndOfOccurrence:
+  file: "./operator-transform-string"
+  commandName: "vim-mode-plus:align-end-of-occurrence"
   commandScope: "atom-text-editor"
 RemoveLeadingWhiteSpaces:
   file: "./operator-transform-string"
@@ -659,7 +685,7 @@ MoveToLineByPercent:
   commandScope: "atom-text-editor"
 MoveToRelativeLine:
   file: "./motion"
-MoveToRelativeLineMinimumOne:
+MoveToRelativeLineMinimumTwo:
   file: "./motion"
 MoveToTopOfScreen:
   file: "./motion"

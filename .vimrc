@@ -10,12 +10,14 @@ set expandtab
 call plug#begin('~/.vim/plugged')
 Plug 'wincent/command-t'
 Plug 'mileszs/ack.vim'
+Plug 'rakr/vim-one'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
+  \ 'hl':      ['fg', 'Normal'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
   \ 'hl+':     ['fg', 'Statement'],
@@ -28,9 +30,19 @@ let g:fzf_colors =
 
 autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
 
+" Remap Ack -> Ack! command; ignore gitignore
 map <leader>a :Ack<CR>
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore'
 endif
+
+" Have Command-T ignore node_modules directories
+let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*"
+
+" Add a color scheme
+colorscheme one
+set background=dark " for the dark version
+" set background=light " for the light version
+call one#highlight('PmenuSel', 'cccccc', '', 'none')

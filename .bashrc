@@ -8,6 +8,11 @@ eval "$(rbenv init -)"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/repos
 source /usr/local/bin/virtualenvwrapper.sh
+export PIP_REQUIRE_VIRTUALENV=true
+
+global-pip() {
+  PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
 
 # set up node
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -26,8 +31,8 @@ export FZF_DEFAULT_OPTS='
 export FZF_CTRL_T__OPTS='
   --color=bg+:24
 '
-export FZF_DEFAULT_COMMAND='find .'
-export FZF_CTRL_T_COMMAND='find .'
+export FZF_DEFAULT_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*"'
+export FZF_CTRL_T_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*"'
 
 function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'
@@ -47,7 +52,7 @@ function virtualenv_info(){
         # Strip out the path and just leave the env name
         venv="${VIRTUAL_ENV##*/}"
     else
-        # In case you don't have one activated
+        # In case you dont have one activated
         venv=''
     fi
     [[ -n "$venv" ]] && echo "(🐍 $venv)"
@@ -58,8 +63,9 @@ export VIRTUAL_ENV_DISABLE_PROMPT=0
 
 # create custome prompt when using virtualenv
 CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
+AVATAR="⚡️"
 
-PS1="⚡️ \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]${CUSTOM_VENV_PROMPT}> \[\033[0;39m\]"
+PS1="$AVATAR \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]$CUSTOM_VENV_PROMPT>\[\033[0;37m\]\[ \]"
 
 export NVM_DIR=~/.nvm
 
@@ -97,4 +103,3 @@ alias vim='/usr/local/bin/vim'
 
 source ~/dotfiles/utilities/fzf_functions.sh
 source ~/dotfiles/utilities/git-completion.bash
-

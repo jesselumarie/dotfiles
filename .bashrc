@@ -31,8 +31,8 @@ export FZF_DEFAULT_OPTS='
 export FZF_CTRL_T__OPTS='
   --color=bg+:24
 '
-export FZF_DEFAULT_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*"'
-export FZF_CTRL_T_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*"'
+export FZF_DEFAULT_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*" ! -name "*.pyc"'
+export FZF_CTRL_T_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*" ! -name "*.pyc"'
 
 function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'

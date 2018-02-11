@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "import pdb; pdb.set_trace()\n",
+    "dontautoexpand" : true,
+    "uid" : "9D6847F1-E587-4804-BAA6-D5FA8D994976",
+    "name" : "pdb",
+    "keyword" : "pdb"
+  }
+}

@@ -16,6 +16,7 @@ Plug 'mileszs/ack.vim'
 Plug 'rakr/vim-one'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'w0rp/ale'
 call plug#end()
 
 let g:fzf_colors =
@@ -33,6 +34,10 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
+
+
+let g:ale_linters = {'python': ['flake8']}
+let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
 
 " Easy spelling command
 :command Spell :setlocal spell! spelllang=en_us
@@ -58,3 +63,4 @@ colorscheme one
 set background=dark " for the dark version
 " set background=light " for the light version
 call one#highlight('PmenuSel', 'cccccc', '', 'none')
+

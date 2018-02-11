@@ -27,4 +27,4 @@ name = Jesse Lumarie
 [push]
 	default = current
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/jesselumarie/.gitignore_global

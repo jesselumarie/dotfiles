@@ -55,7 +55,7 @@ function virtualenv_info(){
         # In case you dont have one activated
         venv=''
     fi
-    [[ -n "$venv" ]] && echo "(🐍 $venv)"
+    [[ -n "$venv" ]] && echo "($venv)"
 }
 
 # disable virtualenv prompt

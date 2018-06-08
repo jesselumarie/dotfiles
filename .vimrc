@@ -8,6 +8,11 @@ set expandtab
 set backspace=2 "make backspace work like you'd expect
 set ignorecase
 set smartcase "case-sensitive search only if caps present
+set hlsearch "highlight found search terms
+set nowrap "don't wrap long lines by default
+set incsearch "jump to words as you search
+nmap <esc><esc> :noh <CR>
+
 
 " Install vim-plugged plugins
 call plug#begin('~/.vim/plugged')
@@ -17,6 +22,7 @@ Plug 'rakr/vim-one'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
+Plug 'terryma/vim-smooth-scroll'
 call plug#end()
 
 let g:fzf_colors =
@@ -51,6 +57,15 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore'
 endif
 
+
+" move to wrapped line instead of skipping
+" stolen from https://github.com/dstrelau/dotfiles/blob/master/vimrc
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
+
+
 " Toggle non-display characters
 nmap <leader>c :set list!<CR>
 set listchars=tab:▸\ ,eol:¬,space:·
@@ -62,5 +77,13 @@ let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*"
 colorscheme one
 set background=dark " for the dark version
 " set background=light " for the light version
-call one#highlight('PmenuSel', 'cccccc', '', 'none')
 
+" Autocomplete Menu Selection Color
+call one#highlight('PmenuSel', 'ffffff', '', 'none')
+call one#highlight('Pmenu', '8b8d91', '', 'none')
+
+" Smooth scrolling
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>

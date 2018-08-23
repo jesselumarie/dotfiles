@@ -14,6 +14,8 @@ set incsearch "jump to words as you search
 nmap <esc><esc> :noh <CR>
 
 
+autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
+
 " Install vim-plugged plugins
 call plug#begin('~/.vim/plugged')
 Plug 'wincent/command-t'
@@ -23,6 +25,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
+Plug 'leafgarland/typescript-vim'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 
 let g:fzf_colors =
@@ -39,15 +43,17 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
-
-
-let g:ale_linters = {'python': ['flake8']}
-let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
-
 " Easy spelling command
 :command Spell :setlocal spell! spelllang=en_us
 
+" Toggle NERD Tree
+nnoremap <leader>r :NERDTreeToggle<CR>
+"
+" Find NERD Tree
+nnoremap <leader>f :NERDTreeFind<CR>
+
+" :only remap
+nnoremap <leader>1 :only<CR>
 
 " Remap Ack -> Ack! command; ignore gitignore
 map <leader>a :Ack<CR>
@@ -71,7 +77,9 @@ nmap <leader>c :set list!<CR>
 set listchars=tab:▸\ ,eol:¬,space:·
 
 " Have Command-T ignore node_modules directories
-let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*"
+let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*"
+nnoremap <Leader>w :CommandTBuffer<CR>
+
 
 " Add a color scheme
 colorscheme one
@@ -87,3 +95,14 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+
+" only enable certain linters
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\   'typescript': ['tslint'],
+\}
+let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
+let g:ale_linters_explicit = 1
+

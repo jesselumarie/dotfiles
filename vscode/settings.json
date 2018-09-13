@@ -1,10 +1,17 @@
 {
-    "workbench.colorTheme": "Quiet Light",
+    "workbench.colorTheme": "Visual Studio Light",
     "vim.disableAnnoyingNeovimMessage": true,
     "editor.minimap.enabled": false,
     "vim.useSystemClipboard": true,
     "editor.renderWhitespace": "all",
     "editor.renderIndentGuides": false,
     "files.trimTrailingWhitespace": true,
-    "extensions.ignoreRecommendations": false
+    "extensions.ignoreRecommendations": false,
+    "files.insertFinalNewline": true,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.enablePreview": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "window.zoomLevel": 0,
+    "vim.disableExtension": true,
+    "editor.multiCursorModifier": "ctrlCmd"
 }

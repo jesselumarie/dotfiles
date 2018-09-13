@@ -93,7 +93,7 @@ alias fa='cd ~/repos/bricklane_repos/fundadmin'
 alias bl='cd ~/repos/bricklane_repos/bricklane'
 alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
-alias f='fzf'
+alias f='fzf | pbcopy'
 alias v='vim'
 alias vim='/usr/local/bin/vim'
 

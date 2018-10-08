@@ -23,12 +23,10 @@
 			<true/>
 			<key>keyword</key>
 			<string>gif</string>
-			<key>plusSpaces</key>
-			<false/>
 			<key>text</key>
-			<string>Google GIF</string>
+			<string>Giphy GIF</string>
 			<key>url</key>
-			<string>https://www.google.com/search?as_st=y&amp;tbm=isch&amp;as_q={query}+gif&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;cr=&amp;as_sitesearch=&amp;safe=images&amp;tbs=itp:animated&amp;safe=active</string>
+			<string>https://giphy.com/search/{query}</string>
 			<key>utf8</key>
 			<true/>
 		</dict>

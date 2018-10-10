@@ -65,7 +65,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=0
 CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
 AVATAR="⚡️"
 
-PS1="$AVATAR \[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]$CUSTOM_VENV_PROMPT>\[\033[0;37m\]\[ \]"
+PS1="$AVATAR\[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]$CUSTOM_VENV_PROMPT>\[\033[0;37m\]\[ \]"
 
 export NVM_DIR=~/.nvm
 

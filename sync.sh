@@ -28,4 +28,5 @@ for file in $files; do
     mv ~/$file $olddir/
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/$file
+    echo "\n"
 done

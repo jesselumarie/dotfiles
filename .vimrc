@@ -27,6 +27,7 @@ Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'leafgarland/typescript-vim'
 Plug 'scrooloose/nerdtree'
+Plug 'Quramy/tsuquyomi'
 call plug#end()
 
 let g:fzf_colors =

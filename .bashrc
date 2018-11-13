@@ -1,8 +1,11 @@
+# set up ruby
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/shims:$PATH"
+eval "$(rbenv init -)"
+
 # Ensure user-installed binaries take precedence
 export PATH=/usr/local/bin:$PATH
 
-# set up ruby
-eval "$(rbenv init -)"
 
 # set up python
 export WORKON_HOME=$HOME/.virtualenvs
@@ -96,6 +99,7 @@ alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
 alias f='fzf | pbcopy'
 alias v='vim'
 alias vim='/usr/local/bin/vim'
+alias vv='/usr/local/bin/vim -c "set syntax=markdown"'
 
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 

@@ -11,10 +11,12 @@ set smartcase "case-sensitive search only if caps present
 set hlsearch "highlight found search terms
 set nowrap "don't wrap long lines by default
 set incsearch "jump to words as you search
+
+" Easy spelling command
+:command Spell :setlocal spell! spelllang=en_us
+
 nmap <esc><esc> :noh <CR>
 
-
-autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
 
 " Install vim-plugged plugins
 call plug#begin('~/.vim/plugged')
@@ -23,12 +25,23 @@ Plug 'mileszs/ack.vim'
 Plug 'rakr/vim-one'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb' "Adds GitHub extensions to vim-fugitive
+Plug 'gabrielelana/vim-markdown'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'leafgarland/typescript-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Quramy/tsuquyomi'
 call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""
+"PLUGIN OPTIONS
+
+""""""""""""""""""""""""""""""""""""""""
+
+" don't check typescript on save
+let g:tsuquyomi_disable_quickfix = 1
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -44,8 +57,28 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" Easy spelling command
-:command Spell :setlocal spell! spelllang=en_us
+" Set ag as search if available
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore'
+endif
+
+" Have Command-T ignore node_modules directories
+let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*"
+
+" only enable certain linters
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\   'typescript': ['tslint'],
+\}
+let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
+let g:ale_linters_explicit = 1
+
+""""""""""""""""""""""""""""""""""""""
+" MAPPINGS
+""""""""""""""""""""""""""""""""""""""
+" Check typescript compilation
+nnoremap <leader>e :TsuGeterr<CR>
 
 " Toggle NERD Tree
 nnoremap <leader>r :NERDTreeToggle<CR>
@@ -60,10 +93,12 @@ nnoremap <leader>1 :only<CR>
 map <leader>a :Ack<CR>
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore'
-endif
 
+" Remap moving between windows
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " move to wrapped line instead of skipping
 " stolen from https://github.com/dstrelau/dotfiles/blob/master/vimrc
@@ -77,10 +112,7 @@ vmap k gk
 nmap <leader>c :set list!<CR>
 set listchars=tab:▸\ ,eol:¬,space:·
 
-" Have Command-T ignore node_modules directories
-let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*"
 nnoremap <Leader>w :CommandTBuffer<CR>
-
 
 " Add a color scheme
 colorscheme one
@@ -98,12 +130,33 @@ noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 
-" only enable certain linters
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'python': ['flake8'],
-\   'typescript': ['tslint'],
-\}
-let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
-let g:ale_linters_explicit = 1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+" stolen from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
 
+" turn on omnicomplete
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+
+
+""" AUTO COMMANDS
+autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
+
+" stolen from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
+" Jump to last cursor position unless it's invalid or in an event handler
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif

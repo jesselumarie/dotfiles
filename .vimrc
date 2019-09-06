@@ -11,6 +11,15 @@ set smartcase "case-sensitive search only if caps present
 set hlsearch "highlight found search terms
 set nowrap "don't wrap long lines by default
 set incsearch "jump to words as you search
+" Folding settings (from
+" https://github.com/dstrelau/dstrelau/blob/master/.vimrc)
+set nofoldenable
+set foldlevel=99               " don't fold unless told to
+set foldmethod=manual
+set foldopen-=block            " block movement shouldn't open folds
+set foldminlines=2             " don't fold a single line
+set foldlevel=99               " start with no folding
+set foldnestmax=1              " only 2 nested folds
 
 " Easy spelling command
 :command Spell :setlocal spell! spelllang=en_us
@@ -26,19 +35,30 @@ Plug 'rakr/vim-one'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb' "Adds GitHub extensions to vim-fugitive
 Plug 'gabrielelana/vim-markdown'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'leafgarland/typescript-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Quramy/tsuquyomi'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'solarnz/thrift.vim'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""
 "PLUGIN OPTIONS
 
 """"""""""""""""""""""""""""""""""""""""
+"Use locally installed flow
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+if matchstr(local_flow, "^\/\\w") == ''
+    let local_flow= getcwd() . "/" . local_flow
+endif
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
 
 " don't check typescript on save
 let g:tsuquyomi_disable_quickfix = 1
@@ -67,7 +87,7 @@ let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*"
 
 " only enable certain linters
 let g:ale_linters = {
-\   'javascript': ['eslint'],
+\   'javascript': ['eslint', 'flow'],
 \   'python': ['flake8'],
 \   'typescript': ['tslint'],
 \}
@@ -99,6 +119,9 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" Copy current path to clipboard
+nnoremap <leader>y :let @+=expand("%")<CR>:f<CR>
 
 " move to wrapped line instead of skipping
 " stolen from https://github.com/dstrelau/dotfiles/blob/master/vimrc
@@ -154,9 +177,17 @@ set omnifunc=syntaxcomplete#Complete
 """ AUTO COMMANDS
 autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
 
+" stolen from https://thoughtbot.com/blog/wrap-existing-text-at-80-characters-in-vim
+" Make markdown wrap
+au BufRead,BufNewFile *.md setlocal textwidth=80
+
 " stolen from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 " Jump to last cursor position unless it's invalid or in an event handler
 autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
+
+
+" for python files, use indent folding method
+au BufNewFile,BufRead *.py set foldmethod=indent

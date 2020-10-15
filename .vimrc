@@ -1,5 +1,5 @@
-:syntax on
-set number
+syntax on
+set number relativenumber
 set clipboard=unnamed
 set softtabstop=2 "how many columns when you hit Tab in insert mode
 set tabstop=2 "how wide a 'tab' is
@@ -20,6 +20,7 @@ set foldopen-=block            " block movement shouldn't open folds
 set foldminlines=2             " don't fold a single line
 set foldlevel=99               " start with no folding
 set foldnestmax=1              " only 2 nested folds
+set visualbell                 " No loud noises i'm old
 
 " Easy spelling command
 :command Spell :setlocal spell! spelllang=en_us
@@ -45,6 +46,11 @@ Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'solarnz/thrift.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'psf/black'
+Plug 'jparise/vim-phabricator'
+Plug 'peplin/vim-phabrowse'
+Plug 'https://github.com/kristijanhusak/vim-js-file-import'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""
@@ -91,8 +97,11 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \   'typescript': ['tslint'],
 \}
+
+let g:ale_fixers = {'javascript': ['prettier-eslint']}
 let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
 let g:ale_linters_explicit = 1
+let g:ale_javascript_prettier_use_local_config = 1
 
 """"""""""""""""""""""""""""""""""""""
 " MAPPINGS
@@ -109,10 +118,8 @@ nnoremap <leader>f :NERDTreeFind<CR>
 " :only remap
 nnoremap <leader>1 :only<CR>
 
-" Remap Ack -> Ack! command; ignore gitignore
-map <leader>a :Ack<CR>
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+map <leader>an :ALENext<CR>
+map <leader>ap :ALEPrevious<CR>
 
 " Remap moving between windows
 nnoremap <C-J> <C-W><C-J>
@@ -173,6 +180,9 @@ inoremap <s-tab> <c-n>
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
+" set wildcard ignore for vim-js-file-import
+set wildignore+=*node_modules/**
+
 
 """ AUTO COMMANDS
 autocmd BufWritePre * %s/\s\+$//e " Auto-strip trailing whitespace on write
@@ -191,3 +201,20 @@ autocmd BufReadPost *
 
 " for python files, use indent folding method
 au BufNewFile,BufRead *.py set foldmethod=indent
+
+" When entering insert mode, relative line numbers are turned off,
+" leaving absolute line numbers turned on.
+" This also happens when the buffer loses focus,
+" so you can glance back at it to see which absolute line you were working on if you need to.
+" https://jeffkreeftmeijer.com/vim-number/
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
+" Store private information for a local machine
+if !empty(glob('~/dotfiles/.vimrc.private'))
+  source ~/dotfiles/.vimrc.private
+endif
+

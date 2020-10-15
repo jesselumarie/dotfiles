@@ -1,17 +1,17 @@
 # set up ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init -)"
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# export PATH="$HOME/.rbenv/shims:$PATH"
+# eval "$(rbenv init -)"
 
 # Ensure user-installed binaries take precedence
 export PATH=/usr/local/bin:$PATH
-
 
 # set up python
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/repos
 source /usr/local/bin/virtualenvwrapper.sh
 export PIP_REQUIRE_VIRTUALENV=true
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 global-pip() {
   PIP_REQUIRE_VIRTUALENV="" pip "$@"
@@ -26,7 +26,6 @@ export PATH=$PATH:/usr/local/go/bin
 
 export GOPATH=$HOME/Github/go
 export PATH=$PATH:$GOPATH/bin
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export LOG_FORMAT=colored
 export FZF_DEFAULT_OPTS='
   --color=bg+:24
@@ -68,7 +67,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=0
 CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
 AVATAR="⚡️"
 
-PS1="$AVATAR\[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]$CUSTOM_VENV_PROMPT>\[\033[0;37m\]\[ \]"
+PS1="$AVATAR(\D{%R})\[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033[0;36m\]$CUSTOM_VENV_PROMPT>\[\033[0;37m\]\[ \]"
 
 export NVM_DIR=~/.nvm
 
@@ -81,6 +80,7 @@ alias gd='git diff'
 alias gco='git checkout'
 alias gdc='git diff --cached'
 alias gcm='git commit -m'
+alias gca='git commit --amend --no-edit'
 alias be='bundle exec'
 alias ber='bundle exec rake'
 alias st='script/test'
@@ -99,7 +99,7 @@ alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
 alias f='fzf | pbcopy'
 alias v='vim'
 alias vim='/usr/local/bin/vim'
-alias vv='/usr/local/bin/vim -c "set syntax=markdown"'
+alias vv='cd ~/code/notes/ && /usr/local/bin/vim -c "set syntax=markdown"'
 
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 

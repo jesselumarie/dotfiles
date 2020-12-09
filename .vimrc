@@ -36,6 +36,7 @@ Plug 'rakr/vim-one'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-ragtag'
 Plug 'gabrielelana/vim-markdown'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
@@ -178,7 +179,9 @@ inoremap <s-tab> <c-n>
 
 " turn on omnicomplete
 filetype plugin on
-set omnifunc=syntaxcomplete#Complete
+set omnifunc=ale#completion#OmniFunc
+" turn on auto import
+let g:ale_completion_autoimport = 1
 
 " set wildcard ignore for vim-js-file-import
 set wildignore+=*node_modules/**

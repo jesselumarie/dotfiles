@@ -100,6 +100,7 @@ alias f='fzf | pbcopy'
 alias v='vim'
 alias vim='/usr/local/bin/vim'
 alias vv='cd ~/code/notes/ && /usr/local/bin/vim -c "set syntax=markdown"'
+alias rename='~/dotfiles/bin/rename-identifier'
 
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 

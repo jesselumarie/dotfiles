@@ -52,6 +52,7 @@ Plug 'psf/black'
 Plug 'jparise/vim-phabricator'
 Plug 'peplin/vim-phabrowse'
 Plug 'https://github.com/kristijanhusak/vim-js-file-import'
+Plug 'keith/swift.vim'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""
@@ -86,7 +87,7 @@ let g:fzf_colors =
 
 " Set ag as search if available
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore'
+  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore --ignore-dir .ignore'
 endif
 
 " Have Command-T ignore node_modules directories
@@ -119,8 +120,14 @@ nnoremap <leader>f :NERDTreeFind<CR>
 " :only remap
 nnoremap <leader>1 :only<CR>
 
+<<<<<<< Updated upstream
 map <leader>an :ALENext<CR>
 map <leader>ap :ALEPrevious<CR>
+=======
+" Find next ALE
+nnoremap <leader>an :ALENextWrap<CR>
+nnoremap <leader>a :ALEPreviousWrap<CR>
+>>>>>>> Stashed changes
 
 " Remap moving between windows
 nnoremap <C-J> <C-W><C-J>

@@ -6,6 +6,10 @@
 # Ensure user-installed binaries take precedence
 export PATH=/usr/local/bin:$PATH
 
+# Set up  brew
+export PATH="/usr/local/sbin:$PATH"
+
+
 # set up python
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/repos
@@ -13,9 +17,9 @@ source /usr/local/bin/virtualenvwrapper.sh
 export PIP_REQUIRE_VIRTUALENV=true
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-global-pip() {
-  PIP_REQUIRE_VIRTUALENV="" pip "$@"
-}
+# global-pip() {
+#   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+# }
 
 # set up node
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -33,8 +37,8 @@ export FZF_DEFAULT_OPTS='
 export FZF_CTRL_T__OPTS='
   --color=bg+:24
 '
-export FZF_DEFAULT_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*" ! -name "*.pyc"'
-export FZF_CTRL_T_COMMAND='find . ! -path "*node_modules/*" ! -path "*ts-node*/*" ! -name "*.pyc"'
+export FZF_DEFAULT_COMMAND='ag -g . '
+export FZF_CTRL_T_COMMAND='ag -g . '
 
 function parse_git_branch {
  git branch --no-color 2> /dev/null | sed -e '/^[^​*]/d' -e 's/*​ \(.*\)/\1/'
@@ -108,3 +112,5 @@ alias rename='~/dotfiles/bin/rename-identifier'
 
 source ~/dotfiles/utilities/fzf_functions.sh
 source ~/dotfiles/utilities/git-completion.bash
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

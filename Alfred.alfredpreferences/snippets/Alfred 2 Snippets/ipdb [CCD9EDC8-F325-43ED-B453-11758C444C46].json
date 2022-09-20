@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "import ipdb; ipdb.set_trace()",
+    "uid" : "CCD9EDC8-F325-43ED-B453-11758C444C46",
+    "name" : "ipdb",
+    "keyword" : "ipdb"
+  }
+}

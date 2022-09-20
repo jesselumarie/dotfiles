@@ -30,6 +30,19 @@
 			<key>utf8</key>
 			<true/>
 		</dict>
+		<key>DE8711A2-9ABA-4748-94A2-77DB4EE57875</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>goto</string>
+			<key>text</key>
+			<string>Go to experiment</string>
+			<key>url</key>
+			<string>https://helium.pinadmin.com/{query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

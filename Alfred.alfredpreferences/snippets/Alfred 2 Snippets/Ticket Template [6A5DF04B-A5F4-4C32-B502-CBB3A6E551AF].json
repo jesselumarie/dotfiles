@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "*Idea (Short summary of what the specific experiment will accomplish)*\n\n*What is the user problem? What is the proposed solution?*\n\n*What is the potential metrics impact?*\n\n**Is there a precedent?*\n\n*How big is the time investment?*\n\n*Are there any other strategic considerations?*",
+    "uid" : "6A5DF04B-A5F4-4C32-B502-CBB3A6E551AF",
+    "name" : "Ticket Template",
+    "keyword" : "Ticket"
+  }
+}

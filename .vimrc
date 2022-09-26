@@ -20,7 +20,9 @@ set foldopen-=block            " block movement shouldn't open folds
 set foldminlines=2             " don't fold a single line
 set foldlevel=99               " start with no folding
 set foldnestmax=1              " only 2 nested folds
+set noerrorbells
 set visualbell                 " No loud noises i'm old
+set t_vb=
 
 " Easy spelling command
 :command Spell :setlocal spell! spelllang=en_us
@@ -52,6 +54,7 @@ Plug 'psf/black'
 Plug 'jparise/vim-phabricator'
 Plug 'peplin/vim-phabrowse'
 Plug 'https://github.com/kristijanhusak/vim-js-file-import'
+Plug 'keith/swift.vim'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""
@@ -86,16 +89,16 @@ let g:fzf_colors =
 
 " Set ag as search if available
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore'
+  let g:ackprg = 'ag --vimgrep --ignore-dir .gitignore --ignore-dir .ignore'
 endif
 
 " Have Command-T ignore node_modules directories
-let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*"
+let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*,*/build/*"
 
 " only enable certain linters
 let g:ale_linters = {
-\   'javascript': ['eslint', 'flow'],
-\   'python': ['flake8'],
+\   'javascript': ['eslint', 'flow-language-server', 'flow'],
+\   'python': ['flake8', 'pyright'],
 \   'typescript': ['tslint'],
 \}
 
@@ -116,11 +119,14 @@ nnoremap <leader>r :NERDTreeToggle<CR>
 " Find NERD Tree
 nnoremap <leader>f :NERDTreeFind<CR>
 
+
 " :only remap
 nnoremap <leader>1 :only<CR>
 
-map <leader>an :ALENext<CR>
-map <leader>ap :ALEPrevious<CR>
+" Find next ALE
+nnoremap <leader>an :ALENextWrap<CR>
+nnoremap <leader>a :ALEPreviousWrap<CR>
+nnoremap <leader>d :ALEGoToDefinition<CR>
 
 " Remap moving between windows
 nnoremap <C-J> <C-W><C-J>
@@ -165,17 +171,17 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
 " stolen from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-n>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"function! InsertTabWrapper()
+"    let col = col('.') - 1
+"    if !col || getline('.')[col - 1] !~ '\k'
+"        return "\<tab>"
+"    else
+"        return "\<c-p>"
+"    endif
+"endfunction
+"inoremap <expr> <tab> InsertTabWrapper()
+"inoremap <s-tab> <c-n>
 
 " turn on omnicomplete
 filetype plugin on
@@ -185,6 +191,7 @@ let g:ale_completion_autoimport = 1
 
 " set wildcard ignore for vim-js-file-import
 set wildignore+=*node_modules/**
+set wildignore+=*build/**
 
 
 """ AUTO COMMANDS

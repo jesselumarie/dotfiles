@@ -4,14 +4,8 @@
 eval "$(rbenv init - zsh)"
 export GEM_HOME=$HOME/.gem
 export PATH=$GEM_HOME/bin:$PATH
-
-# Adding git completion script
-fpath=(~/.zsh $fpath)
-zstyle ':completion:*:*:git:*' script ~/dotfiles/.git-completion.bash
-# only look at local files
-__git_files () {
-    _wanted files expl 'local files' _files
-}
+export PATH=/opt/homebrew/bin/:$PATH
+export RACK_ENV=development
 
 # Add thrift
 export PATH="/usr/local/opt/thrift@0.9/bin:$PATH"
@@ -39,8 +33,8 @@ export FZF_DEFAULT_OPTS='
 export FZF_CTRL_T__OPTS='
   --color=bg+:24
 '
-export FZF_DEFAULT_COMMAND='ag . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc"'
-export FZF_CTRL_T_COMMAND='ag . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc"'
+export FZF_DEFAULT_COMMAND='ag . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc" --ignore "*go*/*" --ignore "*monitors/*" --ignore "*jsvm-cpp*/*"'
+export FZF_CTRL_T_COMMAND='ag . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc" --ignore "*go*/*" --ignore "*monitors/*" --ignore "*jsvm-cpp*/*"'
 
 function vs {
   vim $(fzf)
@@ -82,16 +76,11 @@ RPROMPT='$(virtualenv_info) ${WORKING_DIRECTORY} [$vcs_info_msg_0_] @ ${TIME}'
 # Pulls out just the branch
 zstyle ':vcs_info:git:*' formats '%b'
 
-
-# Add git autocomplete
-autoload -Uz compinit && compinit
-fpath=(~/.zsh $fpath)
-
 export NVM_DIR=~/.nvm
 
-alias git=hub
 alias a='atom'
 alias l='ls'
+
 alias gs='git status'
 alias gp='git pull'
 alias gd='git diff'
@@ -101,15 +90,21 @@ alias gr='git restore'
 alias gdc='git diff --cached'
 alias gcm='git commit -m'
 alias gca='git commit --amend --no-edit'
+alias pushit='git push -u origin HEAD'
+
 alias be='bundle exec'
-alias ber='bundle exec rake' alias dot='cd ~/dotfiles' alias dsync='sh ~/dotfiles/sync.sh; source ~/.zshrc'
+alias ber='bundle exec rake'
+
+alias dot='cd ~/dotfiles'
+alias dsync='sh ~/dotfiles/sync.sh; source ~/.zshrc'
 alias f='fzf | pbcopy'
-alias v='vim'
-alias vv='cd ~/code/notes/ && /usr/local/bin/vim -c "set syntax=markdown"'
+alias v='nvim'
+alias vv='cd ~/code/notes/ && vim -c "set syntax=markdown"'
+alias vim='nvim'
 alias rename='~/dotfiles/bin/rename-identifier'
 alias repos='cd ~/code/'
-alias pb='cd ~/code/pinboard'
-alias wa='cd ~/code/pinboard/webapp'
+alias figma='cd ~/figma/figma'
+alias web='cd ~/figma/figma/web'
 
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 
@@ -117,6 +112,18 @@ alias wa='cd ~/code/pinboard/webapp'
 
 source ~/dotfiles/utilities/fzf_functions.sh
 source ~/dotfiles/venv_wrapper
+
+
+# Adding git completion script
+fpath=(~/dotfiles/utilities $fpath)
+zstyle ':completion:*:*:git:*' script ~/dotfiles/utilities/git-completion.bash
+autoload -Uz compinit && compinit
+zmodload -i zsh/complist
+
+# fpath=(~/.zsh $fpath)
+# zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+
+autoload -Uz compinit && compinit
 
 # set vim as default editor
 export EDITOR=vim
@@ -128,3 +135,14 @@ bindkey '^R' history-incremental-search-backward
 # setup ctrl-a and other bash-like defaults
 bindkey -e
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PKG_CONFIG_PATH="/opt/homebrew/opt/zlib/lib/pkgconfig:/usr/local/opt/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig:/usr/local/opt/openssl@3/lib/pkgconfig:$PKG_CONFIG_PATH"
+export GOPATH="$HOME/go"
+export PATH="$HOME/go/bin:$PATH"
+eval "$(rbenv init -)"
+export RACK_ENV=development
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export AWS_CONFIG_FILE="$HOME/figma/figma/config/aws/sso_config"

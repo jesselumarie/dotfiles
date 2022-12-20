@@ -75,7 +75,6 @@ PS1="$AVATAR(\D{%R})\[\033[0;35m\][\W]\[\033[0;33m\][\$(parse_git_branch)]\[\033
 
 export NVM_DIR=~/.nvm
 
-alias git=hub
 alias a='atom'
 alias l='ls'
 alias gs='git status'

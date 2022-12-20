@@ -27,27 +27,34 @@ set t_vb=
 " Easy spelling command
 :command Spell :setlocal spell! spelllang=en_us
 
+function! GetLineNumber()
+    return getline(".")
+endfunction
+
+" Open at current file at lastest upstream
+:command GB :GBrowse origin/master:%
+:command Gb :GBrowse origin/master:%
+
 nmap <esc><esc> :noh <CR>
 
 
 " Install vim-plugged plugins
 call plug#begin('~/.vim/plugged')
-Plug 'wincent/command-t'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'rakr/vim-one'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-ragtag'
 Plug 'gabrielelana/vim-markdown'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'leafgarland/typescript-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Quramy/tsuquyomi'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'solarnz/thrift.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'psf/black'
@@ -55,6 +62,12 @@ Plug 'jparise/vim-phabricator'
 Plug 'peplin/vim-phabrowse'
 Plug 'https://github.com/kristijanhusak/vim-js-file-import'
 Plug 'keith/swift.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'williamboman/mason.nvim'
+" Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""
@@ -95,23 +108,12 @@ endif
 " Have Command-T ignore node_modules directories
 let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*,ts-node-*,*/build/*"
 
-" only enable certain linters
-let g:ale_linters = {
-\   'javascript': ['eslint', 'flow-language-server', 'flow'],
-\   'python': ['flake8', 'pyright'],
-\   'typescript': ['tslint'],
-\}
-
-let g:ale_fixers = {'javascript': ['prettier-eslint']}
-let g:ale_python_flake8_executable='/bin/sh -c "cd $(dirname %) && /users/jesselumarie/.virtualenvs/$(basename ~+)/bin/flake8"'
-let g:ale_linters_explicit = 1
-let g:ale_javascript_prettier_use_local_config = 1
 
 """"""""""""""""""""""""""""""""""""""
 " MAPPINGS
 """"""""""""""""""""""""""""""""""""""
 " Check typescript compilation
-nnoremap <leader>e :TsuGeterr<CR>
+" nnoremap <leader>e :TsuGeterr<CR>
 
 " Toggle NERD Tree
 nnoremap <leader>r :NERDTreeToggle<CR>
@@ -124,9 +126,9 @@ nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>1 :only<CR>
 
 " Find next ALE
-nnoremap <leader>an :ALENextWrap<CR>
-nnoremap <leader>a :ALEPreviousWrap<CR>
-nnoremap <leader>d :ALEGoToDefinition<CR>
+" nnoremap <leader>an :ALENextWrap<CR>
+" nnoremap <leader>a :ALEPreviousWrap<CR>
+" nnoremap <leader>d :ALEGoToDefinition<CR>
 
 " Remap moving between windows
 nnoremap <C-J> <C-W><C-J>
@@ -146,10 +148,12 @@ vmap k gk
 
 
 " Toggle non-display characters
-nmap <leader>c :set list!<CR>
+nmap <leader>cd :set list!<CR>
 set listchars=tab:▸\ ,eol:¬,space:·
 
-nnoremap <Leader>w :CommandTBuffer<CR>
+" FZF settings, use Git files to ignore .gitignore
+nnoremap <leader>t :GFiles<CR>
+nnoremap <leader>w :Buffers<CR>
 
 " Add a color scheme
 colorscheme one

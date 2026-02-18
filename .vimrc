@@ -11,6 +11,7 @@ set smartcase "case-sensitive search only if caps present
 set hlsearch "highlight found search terms
 set nowrap "don't wrap long lines by default
 set incsearch "jump to words as you search
+set splitright "split new windows to the right
 " Folding settings (from
 " https://github.com/dstrelau/dstrelau/blob/master/.vimrc)
 set nofoldenable
@@ -49,7 +50,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-ragtag'
-Plug 'gabrielelana/vim-markdown'
 " Plug 'w0rp/ale'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'leafgarland/typescript-vim'
@@ -62,12 +62,13 @@ Plug 'jparise/vim-phabricator'
 Plug 'peplin/vim-phabrowse'
 Plug 'https://github.com/kristijanhusak/vim-js-file-import'
 Plug 'keith/swift.vim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'williamboman/mason.nvim'
-" Plug 'williamboman/mason-lspconfig.nvim'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-
+Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim'
+Plug 'greggh/claude-code.nvim'
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""
@@ -121,9 +122,14 @@ nnoremap <leader>r :NERDTreeToggle<CR>
 " Find NERD Tree
 nnoremap <leader>f :NERDTreeFind<CR>
 
+" toggle CopilotChat
+nnoremap <leader>c :ClaudeCode<CR>
 
 " :only remap
 nnoremap <leader>1 :only<CR>
+
+" Start Lsp
+nnoremap <leader>sp :LspStart<CR>
 
 " Find next ALE
 " nnoremap <leader>an :ALENextWrap<CR>
@@ -152,17 +158,29 @@ nmap <leader>cd :set list!<CR>
 set listchars=tab:▸\ ,eol:¬,space:·
 
 " FZF settings, use Git files to ignore .gitignore
-nnoremap <leader>t :GFiles<CR>
+nnoremap <leader>t :GFiles --cached --others --exclude-standard<CR>
 nnoremap <leader>w :Buffers<CR>
 
 " Add a color scheme
 colorscheme one
-set background=dark " for the dark version
-" set background=light " for the light version
+" if $ITERM_PROFILE == 'messy'
+"     set background=dark
+" elseif $ITERM_PROFILE == 'messyLite'
+"     set background=light
+" endif
+"
+set background=dark
+
+command! VL :set background=light | colorscheme one
+command! VD :set background=dark | colorscheme one
 
 " Autocomplete Menu Selection Color
 call one#highlight('PmenuSel', 'ffffff', '', 'none')
 call one#highlight('Pmenu', '8b8d91', '', 'none')
+
+" Highlight search results such that the incremental search looks like
+" complete search
+highlight IncSearch ctermfg=16 ctermbg=146 guifg=#282c34 guibg=#afafd7
 
 " Smooth scrolling
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>

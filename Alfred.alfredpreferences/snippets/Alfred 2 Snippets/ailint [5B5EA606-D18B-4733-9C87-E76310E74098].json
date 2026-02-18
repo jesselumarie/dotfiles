@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "Check the diff against main\/master, and remove all AI generated slop introduced in this branch.\n\nThis includes:\n- Extra comments that a human wouldn't add or is inconsistent with the rest of the file (that's not to say no comments are useful, but only if the code is not particularly legible)\n- Extra defensive checks or try\/catch blocks (if going between a boundary, such as I\/O , you should still make these checks)\n- Casts to any to get around type issues\n- Any other style that is inconsistent with the file",
+    "uid" : "5B5EA606-D18B-4733-9C87-E76310E74098",
+    "name" : "ailint",
+    "keyword" : "ailint"
+  }
+}

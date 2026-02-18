@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "bazel run \/\/share\/{cursor}:build_dist",
+    "uid" : "C8F97CE1-511C-4190-8593-224B238F5028",
+    "name" : "bazel",
+    "keyword" : "bz"
+  }
+}

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>8698185B-ABAB-4B14-96F9-A9EC4ABC7D8E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A7A110AD-0B08-48C4-B2C4-4938BE4BB876</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string></string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Toggle ITerm theme</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>toggle</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>toggle iTerm theme</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>8698185B-ABAB-4B14-96F9-A9EC4ABC7D8E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>#!/usr/bin/env python3
+
+import subprocess
+import json
+
+def run_applescript(script):
+    return subprocess.run(['osascript', '-e', script], capture_output=True, text=True).stdout.strip()
+
+def get_current_profile():
+    script = '''
+    tell application "iTerm"
+        tell current session of current window
+            return profile name
+        end tell
+    end tell
+    '''
+    return run_applescript(script)
+
+def set_profile(profile_name):
+    script = f'''
+    tell application "iTerm"
+        tell current session of current window
+            set profile to profile "{profile_name}"
+        end tell
+    end tell
+    '''
+    run_applescript(script)
+
+# Define your two profile names here
+PROFILE_1 = "messy"
+PROFILE_2 = "messyLite"
+
+current_profile = get_current_profile()
+
+if current_profile == PROFILE_1:
+    new_profile = PROFILE_2
+else:
+    new_profile = PROFILE_1
+
+set_profile(new_profile)
+
+# Output for Alfred
+print(json.dumps({"alfredworkflow": {"arg": new_profile, "variables": {"profile": new_profile}}}))</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>9</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A7A110AD-0B08-48C4-B2C4-4938BE4BB876</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>8698185B-ABAB-4B14-96F9-A9EC4ABC7D8E</key>
+		<dict>
+			<key>xpos</key>
+			<real>100</real>
+			<key>ypos</key>
+			<real>165</real>
+		</dict>
+		<key>A7A110AD-0B08-48C4-B2C4-4938BE4BB876</key>
+		<dict>
+			<key>xpos</key>
+			<real>355</real>
+			<key>ypos</key>
+			<real>175</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>

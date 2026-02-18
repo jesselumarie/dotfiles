@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "python .\/bin\/run_tests.py -s {clipboard}",
-    "uid" : "E532EB8E-9BFE-4B1A-A64E-543A7CF422D0",
-    "name" : "Python Tests",
-    "keyword" : "ptest"
-  }
-}

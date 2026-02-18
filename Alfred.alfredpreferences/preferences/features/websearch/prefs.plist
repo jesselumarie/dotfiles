@@ -4,6 +4,28 @@
 <dict>
 	<key>customSites</key>
 	<dict>
+		<key>37E5741C-ED9A-4F43-9DE6-BADF7ACE8630</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>deployed</string>
+			<key>text</key>
+			<string>See when commit was deployed</string>
+			<key>url</key>
+			<string>https://deploys.figma.engineering/hub?commits={query}</string>
+		</dict>
+		<key>3B312018-9259-4B73-9C67-864319FDADC0</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>mcp</string>
+			<key>text</key>
+			<string>MCP UUID Query</string>
+			<key>url</key>
+			<string>https://app.datadoghq.com/logs?query=%40mcpRequestId%3A{query}%20OR%20%40context.mcpRequestId%3A{query}&amp;agg_m=count&amp;agg_m_source=base&amp;agg_t=count&amp;cols=host%2Cservice&amp;messageDisplay=inline&amp;refresh_mode=sliding&amp;storage=hot&amp;stream_sort=desc&amp;viz=stream&amp;from_ts=1758557117263&amp;to_ts=1759853117263&amp;live=true</string>
+		</dict>
 		<key>5955996F-C97C-4D8A-AAB1-C18F81E14A67</key>
 		<dict>
 			<key>enabled</key>
@@ -16,6 +38,17 @@
 			<string>https://github.com/search?q=user%3APropertyLift+{query}&amp;ref=opensearch&amp;type=Code</string>
 			<key>utf8</key>
 			<true/>
+		</dict>
+		<key>87AA10BE-FEBB-4D9B-8544-17B5FF19A266</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gotof</string>
+			<key>text</key>
+			<string>Goto feature gate</string>
+			<key>url</key>
+			<string>https://console.statsig.com/5ETXMP5xDW3P7AMyQ14tey/gates/{query}</string>
 		</dict>
 		<key>C37C89DA-FEA5-4683-BD38-471C697B8477</key>
 		<dict>
@@ -30,6 +63,17 @@
 			<key>utf8</key>
 			<true/>
 		</dict>
+		<key>D58D88F1-D88C-44D8-89EF-6F75B3C77291</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gotoc</string>
+			<key>text</key>
+			<string>Go to dynamic configs</string>
+			<key>url</key>
+			<string>https://console.statsig.com/5ETXMP5xDW3P7AMyQ14tey/dynamic_configs/{query}</string>
+		</dict>
 		<key>DE8711A2-9ABA-4748-94A2-77DB4EE57875</key>
 		<dict>
 			<key>enabled</key>
@@ -39,9 +83,7 @@
 			<key>text</key>
 			<string>Go to experiment</string>
 			<key>url</key>
-			<string>https://helium.pinadmin.com/{query}</string>
-			<key>utf8</key>
-			<true/>
+			<string>https://console.statsig.com/5ETXMP5xDW3P7AMyQ14tey/experiments/{query}</string>
 		</dict>
 	</dict>
 </dict>

@@ -48,57 +48,114 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
-local util = require("lspconfig/util")
-
 local sorbet_root_dir = function()
     return os.getenv("SORBET_ROOT") or vim.fn.getcwd()
 end
 
-require('lspconfig')['pyright'].setup{
+-- LSP setup: use native vim.lsp.config/enable on 0.11+, fall back to lspconfig on 0.10
+if vim.fn.has('nvim-0.11') == 1 then
+  vim.lsp.config('pyright', {
+    cmd = { 'pyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'setup.py', 'pyrightconfig.json', '.git' },
     on_attach = on_attach,
-}
-require('lspconfig')['tsserver'].setup{
-    filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx"};
+  })
+
+  vim.lsp.config('ts_ls', {
+    cmd = { 'typescript-language-server', '--stdio' },
+    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+    root_markers = { 'tsconfig.json', '.git' },
+    on_attach = on_attach,
+    init_options = {
+      maxTsServerMemory = 24576,
+      nodePath = '/usr/local/bin/node',
+    },
+  })
+
+  vim.lsp.config('clangd', {
+    cmd = { 'clangd' },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+    root_markers = { 'compile_commands.json', '.clangd', '.git' },
+    on_attach = on_attach,
+  })
+
+  vim.lsp.config('sorbet', {
+    cmd = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
+    filetypes = { 'ruby' },
+    root_dir = sorbet_root_dir,
+    on_attach = on_attach,
+  })
+
+  vim.lsp.config('solargraph', {
+    cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
+    filetypes = { 'ruby' },
+    root_dir = sorbet_root_dir,
+    on_attach = on_attach,
+  })
+
+  vim.lsp.config('eslint', {
+    cmd = { 'vscode-eslint-language-server', '--stdio' },
+    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+    root_markers = { '.eslintrc', '.eslintrc.js', '.eslintrc.json', 'eslint.config.js', '.git' },
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
+    on_attach = function(client, bufnr)
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        command = "EslintFixAll",
+      })
+    end,
+  })
+
+  vim.lsp.config('gopls', {
+    cmd = { 'gopls' },
+    filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+    root_markers = { 'go.mod', '.git' },
+    on_attach = on_attach,
+  })
+
+  vim.lsp.enable({ 'pyright', 'ts_ls', 'clangd', 'sorbet', 'solargraph', 'eslint', 'gopls' })
+else
+  -- nvim 0.10: use lspconfig
+  local util = require("lspconfig/util")
+
+  require('lspconfig')['pyright'].setup{
+    on_attach = on_attach,
+  }
+  require('lspconfig')['tsserver'].setup{
+    filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx"},
     on_attach = on_attach,
     root_dir = util.root_pattern("tsconfig.json", ".git"),
     init_options = {
       maxTsServerMemory = 24576,
-      nodePath = "/usr/local/bin/node"
-    }
-}
-
-require('lspconfig')['clangd'].setup{
-    on_attach = on_attach
-}
-
-require('lspconfig')['sorbet'].setup{
+      nodePath = "/usr/local/bin/node",
+    },
+  }
+  require('lspconfig')['clangd'].setup{
     on_attach = on_attach,
-    flags = lsp_flags,
+  }
+  require('lspconfig')['sorbet'].setup{
+    on_attach = on_attach,
     root_dir = sorbet_root_dir,
     cmd = { "bundle", "exec", "srb", "tc", "--lsp" },
-}
-
-require('lspconfig')['solargraph'].setup{
+  }
+  require('lspconfig')['solargraph'].setup{
     on_attach = on_attach,
-    flags = lsp_flags,
     root_dir = sorbet_root_dir,
-    cmd = { "bundle", "exec", "solargraph", "stdio"},
-}
-
-require('lspconfig')['eslint'].setup{
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll"
-    })
-  end
-}
-
-require("lspconfig")['gopls'].setup{
+    cmd = { "bundle", "exec", "solargraph", "stdio" },
+  }
+  require('lspconfig')['eslint'].setup{
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
+    on_attach = function(client, bufnr)
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        command = "EslintFixAll",
+      })
+    end,
+  }
+  require("lspconfig")['gopls'].setup{
     on_attach = on_attach,
-    flags = lsp_flags,
-}
+  }
+end
 
 require("CopilotChat").setup({
     mappings = {

@@ -278,7 +278,24 @@ run_sync() {
 }
 
 # ---------------------------------------------------------------------------
-# 10. Install vim plugins
+# 10. On Linux/devcontainers, use HTTPS for GitHub (SSH keys often missing)
+# ---------------------------------------------------------------------------
+configure_git_https() {
+  [[ "$OS" != "linux" ]] && return 0
+
+  local current
+  current="$(git config --global --get url."https://github.com/".insteadOf 2>/dev/null || true)"
+  if [[ "$current" == "git@github.com:" ]]; then
+    ok "git already configured to use HTTPS for GitHub"
+  else
+    info "Configuring git to use HTTPS for GitHub..."
+    git config --global url."https://github.com/".insteadOf "git@github.com:"
+    ok "git configured to use HTTPS for GitHub"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# 11. Install vim plugins
 # ---------------------------------------------------------------------------
 install_vim_plugins() {
   if ! command -v nvim &>/dev/null; then
@@ -307,6 +324,7 @@ main() {
   install_graphite_linux
   set_default_shell
   run_sync
+  configure_git_https
   install_vim_plugins
 
   echo ""

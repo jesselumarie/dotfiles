@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "git fetch {clipboard} && git checkout -b {clipboard) FETCH_HEAD",
+    "uid" : "5CB735AB-5389-4A83-9D4E-FA9DF0A24D57",
+    "name" : "checkout remote branch",
+    "keyword" : "corb"
+  }
+}

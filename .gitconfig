@@ -29,6 +29,8 @@ name = Jesse Lumarie
 [push]
 	default = current
 [core]
-	excludesfile = /Users/jesselumarie/.gitignore_global
+	excludesfile = /Users/jlumarie/.gitignore_global
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[commit]
+	template = /Users/jlumarie/.git-commit-msg

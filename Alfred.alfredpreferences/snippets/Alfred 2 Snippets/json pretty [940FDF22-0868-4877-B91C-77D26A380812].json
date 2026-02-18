@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "%!jq .",
+    "uid" : "940FDF22-0868-4877-B91C-77D26A380812",
+    "name" : "json pretty",
+    "keyword" : "json"
+  }
+}

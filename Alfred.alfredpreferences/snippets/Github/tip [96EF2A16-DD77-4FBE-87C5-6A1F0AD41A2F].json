@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "> [!TIP]\n> Optional information to help a user be more successful.",
+    "uid" : "96EF2A16-DD77-4FBE-87C5-6A1F0AD41A2F",
+    "name" : "tip",
+    "keyword" : "gh tip"
+  }
+}

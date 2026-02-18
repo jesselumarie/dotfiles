@@ -14,7 +14,7 @@ export PATH="/usr/local/sbin:$PATH"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/repos
 source /usr/local/bin/virtualenvwrapper.sh
-export PIP_REQUIRE_VIRTUALENV=true
+# export PIP_REQUIRE_VIRTUALENV=true
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # global-pip() {
@@ -92,11 +92,7 @@ alias ss='script/server'
 alias sw='script/worker'
 alias sd='script/dev'
 alias sb='script/build'
-alias dps='current_dir=$PWD; cd ~/Github/service_manager/; script/ps; cd $current_dir'
-alias gh='cd ~/repos'
 alias repos='cd ~/repos'
-alias fa='cd ~/repos/bricklane_repos/fundadmin'
-alias bl='cd ~/repos/bricklane_repos/bricklane'
 alias dot='cd ~/dotfiles'
 alias dsync='sh ~/dotfiles/sync.sh; source ~/.bashrc'
 alias f='fzf | pbcopy'
@@ -104,7 +100,6 @@ alias v='vim'
 alias vim='/usr/local/bin/vim'
 alias vv='cd ~/code/notes/ && /usr/local/bin/vim -c "set syntax=markdown"'
 alias rename='~/dotfiles/bin/rename-identifier'
-
 [ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

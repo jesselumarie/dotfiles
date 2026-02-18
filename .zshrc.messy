@@ -1,0 +1,201 @@
+setopt prompt_subst
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*+set-message:*' hooks \
+  disable-untracked  # don't stat untracked files
+zstyle ':vcs_info:git:*' check-for-changes false
+zstyle ':vcs_info:git:*' formats '%b'
+
+# CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
+AVATAR="⚡️"
+WORKING_DIRECTORY="%~"
+NEWLINE=$'\n'
+TIME="%*"
+PROMPT="${NEWLINE}${AVATAR} "
+RPROMPT='$(virtualenv_info) ${WORKING_DIRECTORY} [$vcs_info_msg_0_] @ ${TIME}'
+# RPROMPT='${WORKING_DIRECTORY} [$vcs_info_msg_0_] @ ${TIME}'
+
+# Pulls out just the branch
+zstyle ':vcs_info:git:*' formats '%b'
+# set up ruby
+eval "$(rbenv init - zsh)"
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/bin:$PATH
+export RACK_ENV=development
+export GHOSTTY_CONFIG_FILE=$HOME/.config/ghostty/config
+
+# Add thrift
+export PATH="/usr/local/opt/thrift@0.9/bin:$PATH"
+
+# set up python
+# export WORKON_HOME=$HOME/.virtualenvs
+# export PROJECT_HOME=$HOME/repos
+# export PIP_REQUIRE_VIRTUALENV=true
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+# global-pip() {
+#   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+# }
+
+# set up node
+export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvm"
+# Lazy nvm: only load on first use
+nvm() { unset -f nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm "$@"; }
+npm()  { unset -f npm;  nvm >/dev/null 2>&1; command npm "$@"; }
+pnpm() { unset -f pnpm; nvm >/dev/null 2>&1; command pnpm "$@"; }
+yarn() { unset -f yarn; nvm >/dev/null 2>&1; command yarn "$@"; }
+
+export PATH=$PATH:$GOPATH/bin
+export LOG_FORMAT=colored
+export FZF_DEFAULT_OPTS='
+  --color=bg+:24
+'
+export FZF_CTRL_T__OPTS='
+  --color=bg+:24
+'
+export FZF_DEFAULT_COMMAND='ag -g . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc" --ignore "*go*/*" --ignore "*monitors/*" --ignore "*jsvm-cpp*/*"'
+export FZF_CTRL_T_COMMAND='ag -g . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc" --ignore "*go*/*" --ignore "*monitors/*" --ignore "*jsvm-cpp*/*"'
+
+function vs {
+  nvim $(fzf)
+}
+
+function o {
+  open $(fzf)
+}
+
+# A function that checks the difference between two strings
+source ~/dotfiles/diffs.zsh
+
+# disable virtualenv prompt
+# export VIRTUAL_ENV_DISABLE_PROMPT=0
+
+# create custome prompt when using virtualenv
+
+function virtualenv_info(){
+    # Get Virtual Env
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        # Strip out the path and just leave the env name
+        venv="${VIRTUAL_ENV##*/}"
+    else
+        # In case you dont have one activated
+        venv=''
+    fi
+    [[ -n "$venv" ]] && echo "🐍 ($venv)"
+}
+
+
+export NVM_DIR=~/.nvm
+
+alias a='atom'
+alias l='ls'
+
+
+# GIT
+alias gs='git status'
+alias gp='git pull'
+alias gd='git diff'
+alias gco='git checkout'
+alias gsw='git switch'
+alias gr='git restore'
+alias gdc='git diff --cached'
+alias gcm='git commit -m'
+alias gcp='git cherry-pick'
+alias gcpc='git cherry-pick --continue'
+alias grbc='git rebase --continue'
+alias gca='git commit --amend --no-edit'
+alias gb="git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short) %(committerdate:relative)' | head -n 7"
+alias pushit='git push -u --force-with-lease origin HEAD'
+alias wip='git commit -m "WIP" --no-verify'
+
+# GRAPHITE
+# amend existing Graphite commit
+alias gtma='gt modify -a'
+alias gtp='gt submit'
+alias gtc='gt continue'
+alias gts='gt submit'
+
+function branchd() {
+  if [[ $1 = "for" && $2 = "realz" ]]; then
+      git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done
+    else
+      ( git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]] && echo "$branch is merged into master and can be deleted"; done ) || echo "No branches to delete!"
+    fi
+}
+
+# iTerm2 profile switching
+# lite() { echo -e "\033]50;SetProfile=messyLite\a" && export ITERM_PROFILE="messyLite" }
+# dark() { echo -e "\033]50;SetProfile=messy\a" && export ITERM_PROFILE="messy" }
+#
+# Ghostty profile switching
+export MESSY_LITE=MessyLite
+export MESSY_DARK=Messy
+lite() {sed -i '' "s/^theme = .*/theme = $MESSY_LITE/" "$GHOSTTY_CONFIG_FILE"}
+dark() {sed -i '' "s/^theme = .*/theme = $MESSY_DARK/" "$GHOSTTY_CONFIG_FILE"}
+
+get_ghostty_theme() {
+   config_file="$HOME/.config/ghostty/config"
+   if [ -f "$config_file" ]; then
+       grep "^theme = " "$GHOSTTY_CONFIG_FILE" | cut -d= -f2 | tr -d ' '
+   else
+       echo "Config file not found: $GHOSTTY_CONFIG_FILE"
+       return 1
+   fi
+}
+
+alias be='bundle exec'
+alias ber='bundle exec rake'
+
+alias dot='cd ~/dotfiles'
+alias dsync='sh ~/dotfiles/sync.sh; source ~/.zshrc'
+alias f='fzf | pbcopy'
+alias v='nvim'
+alias vv='cd ~/code/notes/ && vim -c "set syntax=markdown"'
+alias vim='nvim'
+alias rename='~/dotfiles/bin/rename-identifier'
+alias repos='cd ~/code/'
+alias lvim='/Users/jlumarie/.local/bin/lvim'
+[ -f  ~/dotfiles/.bashrc.private ] && source ~/dotfiles/.bashrc.private
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+source ~/dotfiles/utilities/fzf_functions.sh
+# source ~/dotfiles/venv_wrapper
+
+
+# BEFORE
+# # Adding git completion script
+# fpath=(~/dotfiles/utilities $fpath)
+
+fpath=(~/.zsh $fpath)
+
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit
+compinit -u
+
+# If git completion is not working, try:
+# compdef _git git
+
+
+# set vim as default editor
+export EDITOR=vim
+export VISUAL="$EDITOR"
+
+# set up copilot cli shorcuts
+eval "$(github-copilot-cli alias -- "$0")"
+
+# enable reverse search
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+# setup ctrl-a and other bash-like defaults
+bindkey -e
+
+# lazy-load python
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+# pyenv() { unset -f pyenv; command pyenv "$@"; }
+# python() { command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"; command python "$@"; }
+# pip()    { command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"; command pip "$@"; }
+
+

@@ -1,6 +1,53 @@
 .DS_Store
 **/.DS_Store
-.bashrc.private
 *.swp
 *.swo
-Alfred.alfredpreferences/clipboard/*
+
+# Private/work-specific configs (never track)
+.zshrc.private.*
+.bashrc.private
+
+# Config dirs with auth/private data
+.config/configstore/
+.config/gh/
+.config/gh-copilot/
+.config/git/
+.config/github-copilot/
+.config/graphite/
+.config/lvim/
+.config/mise/
+.config/mozilla/
+.config/simple-update-notifier/
+.config/zed/
+.config/iterm2/
+.config/.config
+.config/karabiner/automatic_backups/
+
+# Figma-specific
+figma-scripts/
+Figma Icon*
+Alfred.alfredpreferences/snippets/Figma/
+
+# Ghostty backups
+.config/ghostty/*.bak
+
+# Legacy/generated
+*.pyc
+blob-store/
+karabiner/core.xml
+config.cson
+github.cson
+init.coffee
+keymap.cson
+.pythonstartup
+.rspec
+.ruby-version
+
+# Alfred exclusions
+Alfred.alfredpreferences/clipboard/
+Alfred.alfredpreferences/snippets/Pinterest/
+Alfred.alfredpreferences/snippets/Alfred 2 Snippets/Bank Account*
+Alfred.alfredpreferences/snippets/Alfred 2 Snippets/NI Number*
+Alfred.alfredpreferences/snippets/Alfred 2 Snippets/Sort Code*
+Alfred.alfredpreferences/snippets/Alfred 2 Snippets/PropertyLift*
+Alfred.alfredpreferences/snippets/Alfred 2 Snippets/LPN*

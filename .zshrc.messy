@@ -8,7 +8,11 @@ zstyle ':vcs_info:git:*' check-for-changes false
 zstyle ':vcs_info:git:*' formats '%b'
 
 # CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
-AVATAR="⚡️"
+if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || -n "$SSH_CONNECTION" ]]; then
+  AVATAR="[%m] ⚡️"
+else
+  AVATAR="⚡️"
+fi
 WORKING_DIRECTORY="%~"
 NEWLINE=$'\n'
 TIME="%*"

@@ -1,0 +1,12 @@
+brew "zsh"
+brew "git"
+brew "neovim"
+brew "fzf"
+brew "the_silver_searcher"  # ag
+brew "gh"
+brew "rbenv"
+brew "ruby-build"
+brew "pyenv"
+brew "mise"
+tap "withgraphite/tap"
+brew "withgraphite/tap/graphite"

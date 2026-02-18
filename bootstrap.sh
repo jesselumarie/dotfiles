@@ -101,7 +101,7 @@ install_core_packages_linux() {
   fi
 
   # pyenv — try package manager first, fall back to installer
-  if command -v pyenv &>/dev/null; then
+  if command -v pyenv &>/dev/null || [[ -x "$HOME/.pyenv/bin/pyenv" ]]; then
     ok "pyenv already installed"
   else
     if [[ "$PKG_MGR" == "apt" ]]; then
@@ -166,6 +166,7 @@ install_nvm() {
   fi
 
   info "Installing nvm..."
+  mkdir -p "$nvm_dir"
   export NVM_DIR="$nvm_dir"
   curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
   ok "nvm installed to $nvm_dir"

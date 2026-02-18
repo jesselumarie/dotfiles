@@ -11,7 +11,7 @@ zstyle ':vcs_info:git:*' formats '%b'
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || -n "$SSH_CONNECTION" ]]; then
   AVATAR="[%m] ⚡️"
   # Set terminal background to black over SSH for visual distinction
-  printf '\033]11;#000000\033\\'
+  printf '\e]11;#000000\a'
 else
   AVATAR="⚡️"
 fi

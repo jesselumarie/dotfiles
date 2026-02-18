@@ -10,8 +10,10 @@ zstyle ':vcs_info:git:*' formats '%b'
 # CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || -n "$SSH_CONNECTION" ]]; then
   AVATAR="[%m] ⚡️"
-  # Set terminal background to black over SSH for visual distinction
+  # Set terminal background to black over SSH for visual distinction,
+  # and restore the terminal default on exit
   printf '\e]11;#000000\a'
+  trap "printf '\e]111\a'" EXIT
 else
   AVATAR="⚡️"
 fi

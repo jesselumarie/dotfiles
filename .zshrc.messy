@@ -27,7 +27,7 @@ RPROMPT='$(virtualenv_info) ${WORKING_DIRECTORY} [$vcs_info_msg_0_] @ ${TIME}'
 # Pulls out just the branch
 zstyle ':vcs_info:git:*' formats '%b'
 # set up ruby
-eval "$(rbenv init - zsh)"
+command -v rbenv &>/dev/null && eval "$(rbenv init - zsh)"
 export GEM_HOME=$HOME/.gem
 export PATH=$GEM_HOME/bin:$PATH
 export RACK_ENV=development
@@ -191,7 +191,7 @@ export EDITOR=vim
 export VISUAL="$EDITOR"
 
 # set up copilot cli shorcuts
-eval "$(github-copilot-cli alias -- "$0")"
+command -v github-copilot-cli &>/dev/null && eval "$(github-copilot-cli alias -- "$0")"
 
 # enable reverse search
 bindkey -v

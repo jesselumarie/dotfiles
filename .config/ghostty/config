@@ -4,3 +4,4 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 keybind = global:super+control+backslash=toggle_quick_terminal
 keybind = shift+enter=text:\n
+clipboard-paste-protection = false

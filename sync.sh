@@ -30,3 +30,12 @@ for file in $files; do
     ln -s $dir/$file ~/$file
     echo "\n"
 done
+
+# Symlink individual files within .claude (don't symlink the whole dir — it has runtime data)
+echo "Symlinking .claude/settings.json"
+mkdir -p ~/.claude
+if [[ -f ~/.claude/settings.json && ! -L ~/.claude/settings.json ]]; then
+    mv ~/.claude/settings.json $olddir/claude-settings.json
+fi
+ln -sf $dir/.claude/settings.json ~/.claude/settings.json
+echo "...done"

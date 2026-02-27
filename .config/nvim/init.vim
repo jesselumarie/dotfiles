@@ -61,15 +61,11 @@ if vim.fn.has('nvim-0.11') == 1 then
     on_attach = on_attach,
   })
 
-  vim.lsp.config('ts_ls', {
-    cmd = { 'typescript-language-server', '--stdio' },
+  vim.lsp.config('tsgo', {
+    cmd = { 'tsgo', '--lsp' },
     filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
     root_markers = { 'tsconfig.json', '.git' },
     on_attach = on_attach,
-    init_options = {
-      maxTsServerMemory = 24576,
-      nodePath = '/usr/local/bin/node',
-    },
   })
 
   vim.lsp.config('clangd', {
@@ -113,7 +109,7 @@ if vim.fn.has('nvim-0.11') == 1 then
     on_attach = on_attach,
   })
 
-  vim.lsp.enable({ 'pyright', 'ts_ls', 'clangd', 'sorbet', 'solargraph', 'eslint', 'gopls' })
+  vim.lsp.enable({ 'pyright', 'tsgo', 'clangd', 'sorbet', 'solargraph', 'eslint', 'gopls' })
 else
   -- nvim 0.10: use lspconfig
   local util = require("lspconfig/util")

@@ -1,0 +1,36 @@
+{
+  "model": "opus[1m]",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude has stopped\" with title \"Claude Code\" sound name \"default\"'"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude is requesting permission\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); current_dir=$(basename \"$cwd\"); time=$(date \"+%H:%M\"); model=$(echo \"$input\" | jq -r '.model.display_name'); git_branch=\"\"; if git -C \"$cwd\" -c core.useReplaceRefs=false rev-parse --git-dir > /dev/null 2>&1; then git_branch=$(git -C \"$cwd\" -c core.useReplaceRefs=false branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'); fi; venv=\"\"; if [[ -n \"$VIRTUAL_ENV\" ]]; then venv=\"${VIRTUAL_ENV##*/}\"; fi; used=$(echo \"$input\" | jq -r '.context_window.used_percentage // empty'); total_input=$(echo \"$input\" | jq -r '.context_window.total_input_tokens // 0'); total_output=$(echo \"$input\" | jq -r '.context_window.total_output_tokens // 0'); cost=$(echo \"scale=4; ($total_input * 3 / 1000000) + ($total_output * 15 / 1000000)\" | bc); printf \"(%s) \" \"$time\"; if [[ -n \"$SSH_CONNECTION\" ]]; then printf \"\\033[0;31m[%s]\\033[0m \" \"$(hostname -s)\"; fi; printf \"\\033[0;34m[%s]\\033[0m \" \"$model\"; printf \"\\033[0;35m[%s]\\033[0m \" \"$current_dir\"; if [[ -n \"$git_branch\" ]]; then printf \"\\033[0;33m[%s]\\033[0m \" \"$git_branch\"; fi; if [[ -n \"$venv\" ]]; then printf \"\\033[0;36m(%s)\\033[0m \" \"$venv\"; fi; if [[ -n \"$used\" ]]; then bar_length=10; filled=$(printf \"%.0f\" $(echo \"scale=2; $used * $bar_length / 100\" | bc)); empty=$((bar_length - filled)); bar=\"\"; for ((i=0; i<filled; i++)); do bar+=\"▓\"; done; for ((i=0; i<empty; i++)); do bar+=\"░\"; done; printf \"\\033[0;32m[%s %s%%]\\033[0m \" \"$bar\" \"$used\"; fi; printf \"\\033[0;37m[$%s]\\033[0m\" \"$cost\""
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true
+}

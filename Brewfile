@@ -4,6 +4,7 @@ brew "neovim"
 brew "fzf"
 brew "the_silver_searcher"  # ag
 brew "gh"
+brew "jq"
 brew "rbenv"
 brew "ruby-build"
 brew "pyenv"

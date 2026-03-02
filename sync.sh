@@ -32,10 +32,23 @@ for file in $files; do
 done
 
 # Symlink individual files within .claude (don't symlink the whole dir — it has runtime data)
-echo "Symlinking .claude/settings.json"
+echo "Symlinking .claude config files"
 mkdir -p ~/.claude
 if [[ -f ~/.claude/settings.json && ! -L ~/.claude/settings.json ]]; then
     mv ~/.claude/settings.json $olddir/claude-settings.json
 fi
 ln -sf $dir/.claude/settings.json ~/.claude/settings.json
+if [[ -f ~/.claude/CLAUDE.md && ! -L ~/.claude/CLAUDE.md ]]; then
+    mv ~/.claude/CLAUDE.md $olddir/claude-CLAUDE.md
+fi
+ln -sf $dir/.claude/CLAUDE.md ~/.claude/CLAUDE.md
+echo "...done"
+
+# Symlink .codex/AGENTS.md -> .claude/CLAUDE.md (codex uses the same instructions)
+echo "Symlinking .codex/AGENTS.md"
+mkdir -p ~/.codex
+if [[ -f ~/.codex/AGENTS.md && ! -L ~/.codex/AGENTS.md ]]; then
+    mv ~/.codex/AGENTS.md $olddir/codex-AGENTS.md
+fi
+ln -sf ~/.claude/CLAUDE.md ~/.codex/AGENTS.md
 echo "...done"

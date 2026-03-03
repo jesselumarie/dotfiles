@@ -40,14 +40,29 @@ detect_os() {
 install_homebrew() {
   [[ "$OS" != "macos" ]] && return 0
 
+  # brew may not be in PATH yet (e.g. fresh shell); check known install paths
   if command -v brew &>/dev/null; then
     ok "Homebrew already installed"
+    return 0
+  elif [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    ok "Homebrew already installed (added to PATH)"
+    return 0
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+    ok "Homebrew already installed (added to PATH)"
     return 0
   fi
 
   info "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+
+  # Add brew to PATH for the rest of this script
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
   ok "Homebrew installed"
 }
 
@@ -56,7 +71,7 @@ install_homebrew() {
 # ---------------------------------------------------------------------------
 install_core_packages_macos() {
   info "Installing packages from Brewfile..."
-  brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock
+  brew bundle --file="$DOTFILES_DIR/Brewfile"
   ok "Brewfile packages installed"
 
   # fzf shell integration

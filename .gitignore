@@ -13,7 +13,7 @@
 .config/gh-copilot/
 .config/git/
 .config/github-copilot/
-.config/graphite/
+.config/graphite/user_config
 .config/lvim/
 .config/mise/
 .config/mozilla/

@@ -293,7 +293,23 @@ run_sync() {
 }
 
 # ---------------------------------------------------------------------------
-# 10. Install vim plugins
+# 10. Install TPM (tmux plugin manager)
+# ---------------------------------------------------------------------------
+install_tpm() {
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+
+  if [[ -d "$tpm_dir" ]]; then
+    ok "TPM already installed"
+    return 0
+  fi
+
+  info "Installing TPM (tmux plugin manager)..."
+  git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+  ok "TPM installed (press prefix + I inside tmux to install plugins)"
+}
+
+# ---------------------------------------------------------------------------
+# 11. Install vim plugins
 # ---------------------------------------------------------------------------
 install_vim_plugins() {
   if ! command -v nvim &>/dev/null; then
@@ -322,6 +338,7 @@ main() {
   install_graphite_linux
   set_default_shell
   run_sync
+  install_tpm
   install_vim_plugins
 
   echo ""

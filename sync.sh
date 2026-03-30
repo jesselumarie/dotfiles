@@ -9,7 +9,7 @@ set -euo pipefail
 
 dir="$HOME/dotfiles"
 olddir="$HOME/dotfiles_backup"
-files=".bash_profile .bashrc .vimrc .gitconfig .gitignore_global .config .zshrc .zshrc.messy"
+files=".bash_profile .bashrc .vimrc .gitconfig .gitignore_global .config .zshrc .zshrc.messy .tmux.conf"
 
 ##########
 

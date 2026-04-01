@@ -9,6 +9,7 @@
     meaningfully or delete it (e.g. _why_ this PR is needed should not appear,
     but be replaced with an actual reason)
   - When commiting, set HK_PROFILE=slow to ensure proper linting and formatting
+  - Branches should start with `jlumarie/`
   - Feel free to make use of github specific markdown tags like:
     - > [!NOTE]
     - > [!WARNING]

@@ -1,4 +1,5 @@
 setopt prompt_subst
+[ -f ~/figma/figma/.devcontainer/personalization/ps1.sh ] && source ~/figma/figma/.devcontainer/personalization/ps1.sh
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:*' enable git
@@ -9,7 +10,11 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 # CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || -n "$SSH_CONNECTION" ]]; then
-  AVATAR="[%m] ⚡️"
+  if command -v __dx_instance_name &>/dev/null; then
+    AVATAR='[$(__dx_instance_name)] ⚡️'
+  else
+    AVATAR="[%m] ⚡️"
+  fi
   # Set terminal background to black over SSH for visual distinction,
   # and restore the terminal default on exit
   printf '\e]11;#000000\a'
@@ -62,8 +67,8 @@ export FZF_DEFAULT_OPTS='
 export FZF_CTRL_T__OPTS='
   --color=bg+:24
 '
-export FZF_DEFAULT_COMMAND='ag -g . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc" --ignore "*go*/*" --ignore "*monitors/*" --ignore "*jsvm-cpp*/*"'
-export FZF_CTRL_T_COMMAND='ag -g . --files-with-matches --ignore-dir "*node_modules/*" --ignore-dir "*ts-node*/*" --ignore "*.pyc" --ignore "*go*/*" --ignore "*monitors/*" --ignore "*jsvm-cpp*/*"'
+export FZF_DEFAULT_COMMAND='rg --files --glob "!node_modules" --glob "!ts-node*" --glob "!*.pyc" --glob "!go*" --glob "!monitors" --glob "!jsvm-cpp*"'
+export FZF_CTRL_T_COMMAND='rg --files --glob "!node_modules" --glob "!ts-node*" --glob "!*.pyc" --glob "!go*" --glob "!monitors" --glob "!jsvm-cpp*"'
 
 function vs {
   nvim $(fzf)

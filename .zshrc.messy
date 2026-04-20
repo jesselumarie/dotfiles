@@ -11,7 +11,17 @@ zstyle ':vcs_info:git:*' formats '%b'
 # CUSTOM_VENV_PROMPT="\$(virtualenv_info)";
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || -n "$SSH_CONNECTION" ]]; then
   if command -v __dx_instance_name &>/dev/null; then
-    AVATAR='[$(__dx_instance_name)] ⚡️'
+    # TMNT-themed colors per devbox: raph=red, leo=blue, mikey=orange, don=purple
+    __dx_host_color() {
+      case "$(__dx_instance_name 2>/dev/null)" in
+        *raph*)  print -n '%F{red}' ;;
+        *leo*)   print -n '%F{blue}' ;;
+        *mikey*) print -n '%F{208}' ;;
+        *don*)   print -n '%F{135}' ;;
+        *)       print -n '' ;;
+      esac
+    }
+    AVATAR='[$(__dx_host_color)$(__dx_instance_name)%f] ⚡️'
   else
     AVATAR="[%m] ⚡️"
   fi

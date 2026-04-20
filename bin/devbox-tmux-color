@@ -1,0 +1,11 @@
+#!/bin/bash
+# Emit a tmux color name for the current devbox's TMNT theme.
+# Used by status-style in ~/dotfiles/.tmux.conf.
+name="${FIGMA_CODER_WORKSPACE_NAME:-$(cat /home/ubuntu/.config/devbox/instance_name 2>/dev/null || hostname)}"
+case "$name" in
+  *raph*)  echo "colour160" ;; # red
+  *leo*)   echo "colour33" ;;  # blue
+  *mikey*) echo "colour208" ;; # orange
+  *don*)   echo "colour135" ;; # purple
+  *)       echo "colour76" ;;  # default green (tmux default)
+esac

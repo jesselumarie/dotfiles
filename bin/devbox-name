@@ -1,0 +1,4 @@
+#!/bin/bash
+# Echo the devbox instance name, falling back to $(hostname) off-devbox.
+# Mirrors the logic in ~/figma/figma/.devcontainer/personalization/ps1.sh
+echo "${FIGMA_CODER_WORKSPACE_NAME:-$(cat /home/ubuntu/.config/devbox/instance_name 2>/dev/null || hostname)}"

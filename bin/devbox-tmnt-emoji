@@ -1,0 +1,12 @@
+#!/bin/bash
+# Emit a colored emoji for the current devbox's TMNT theme.
+# Used by set-titles-string in ~/dotfiles/.tmux.conf so the outer
+# terminal tab (e.g. Ghostty) shows a color cue for the devbox.
+name="${FIGMA_CODER_WORKSPACE_NAME:-$(cat /home/ubuntu/.config/devbox/instance_name 2>/dev/null || hostname)}"
+case "$name" in
+  *raph*)  echo "🔴" ;;
+  *leo*)   echo "🔵" ;;
+  *mikey*) echo "🟠" ;;
+  *don*)   echo "🟣" ;;
+  *)       echo "🟢" ;;
+esac

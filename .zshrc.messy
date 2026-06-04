@@ -47,6 +47,7 @@ export GEM_HOME=$HOME/.gem
 export PATH=$GEM_HOME/bin:$PATH
 export RACK_ENV=development
 export GHOSTTY_CONFIG_FILE=$HOME/.config/ghostty/config
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # Add thrift
 export PATH="/usr/local/opt/thrift@0.9/bin:$PATH"

@@ -31,6 +31,7 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Github/go
 export PATH=$PATH:$GOPATH/bin
 export LOG_FORMAT=colored
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 export FZF_DEFAULT_OPTS='
   --color=bg+:24
 '

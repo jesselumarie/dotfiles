@@ -1,0 +1,11 @@
+--smart-case
+--max-columns=100
+--max-columns-preview
+--glob=!**/*.{min.js,map,heapsnapshot,cpuprofile}
+--glob=!**/{package-lock.json,pnpm-lock.yaml,yarn.lock,bun.lock,Cargo.lock}
+--glob=!**/.env
+--glob=!**/.env.*
+--glob=!**/.git/**
+
+# Globs win even over --hidden and --no-ignore.
+# Search ignored files explicitly when needed, e.g. rg --glob '*.heapsnapshot' <pattern>.

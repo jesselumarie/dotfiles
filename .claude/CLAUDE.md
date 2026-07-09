@@ -8,6 +8,18 @@
   - For the template, do not leave the default text in place, fill it out
     meaningfully or delete it (e.g. _why_ this PR is needed should not appear,
     but be replaced with an actual reason)
+  - For Figma PR bodies, match the intent of the template, not just the headings:
+    - In `## Describe`, answer why the PR is needed, what changed, and what
+      docs changed, if any.
+    - In `## Test Plan`, lead with the manual behavior or demo that proves the
+      change works. Summarize automated coverage by purpose instead of listing
+      every test command.
+    - Include exact commands only when explicitly requested, when needed to
+      reproduce a failure, or when CI/debug context depends on them.
+    - For feature flags and accessibility, keep the template shape and write
+      `N/A` with a short reason when they are not relevant.
+    - Running tests is required; dumping every test command in the PR body is
+      not.
   - When commiting, set HK_PROFILE=slow to ensure proper linting and formatting
   - Branches should start with `jlumarie/`
   - Feel free to make use of github specific markdown tags like:

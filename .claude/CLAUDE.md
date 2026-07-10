@@ -11,15 +11,19 @@
   - For Figma PR bodies, match the intent of the template, not just the headings:
     - In `## Describe`, answer why the PR is needed, what changed, and what
       docs changed, if any.
-    - In `## Test Plan`, lead with the manual behavior or demo that proves the
-      change works. Summarize automated coverage by purpose instead of listing
-      every test command.
-    - Include exact commands only when explicitly requested, when needed to
-      reproduce a failure, or when CI/debug context depends on them.
+    - In `## Test Plan`, include only the manual or user-visible behavior that
+      proves the change works.
+    - Do not include automated test commands, test counts, coverage, lint,
+      typecheck, pre-commit, or CI results in the PR body.
+    - Keep automated verification results in the final task handoff instead.
+    - If the PR template requests automated test details, delete that prompt
+      rather than filling it in.
+    - Only include automated verification in a PR body when explicitly
+      requested.
     - For feature flags and accessibility, keep the template shape and write
       `N/A` with a short reason when they are not relevant.
-    - Running tests is required; dumping every test command in the PR body is
-      not.
+    - Running required tests is still required even though their results do not
+      belong in the PR body.
   - When commiting, set HK_PROFILE=slow to ensure proper linting and formatting
   - Branches should start with `jlumarie/`
   - Feel free to make use of github specific markdown tags like:

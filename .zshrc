@@ -15,4 +15,3 @@ export RACK_ENV=development
 export MISE_ENV=macos # loads mise.macos.toml
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="nvim"
-eval "$(rbenv init -)"
